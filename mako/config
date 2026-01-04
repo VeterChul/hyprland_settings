@@ -1,0 +1,45 @@
+# ========== ОСНОВНЫЕ НАСТРОЙКИ ==========
+font=Comic Mono 10
+width=300
+height=100
+margin=20,20
+padding=20
+border-size=1
+border-radius=10
+
+# ========== ЦВЕТОВАЯ СХЕМА ==========
+# Фон и текст
+background-color=#000000
+text-color=#ff00ff
+border-color=#ff00ff
+
+# Разные уровни важности
+[urgency=low]
+border-color=#ff00ff
+default-timeout=3000
+
+[urgency=normal]
+border-color=#ff00ff
+default-timeout=10000
+
+[urgency=high]
+border-color=#ff00ff
+default-timeout=15000
+
+# ========== КРИТЕРИИ ДЛЯ ANCHOR ==========
+[]
+max-visible=5
+
+# ========== ПОВЕДЕНИЕ ==========
+default-timeout=10000
+ignore-timeout=0
+
+# ========== ФОРМАТИРОВАНИЕ ==========
+format=<b>%a</b>\n%s\n%b
+
+# ========== ДОПОЛНИТЕЛЬНЫЕ НАСТРОЙКИ ==========
+icons=1
+history=1
+markup=1
+group-by=app-name
+

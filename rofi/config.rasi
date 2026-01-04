@@ -1,0 +1,15 @@
+configuration{
+    modi: "run,drun,window";
+    terminal: "kitty";
+    drun-display-format: "{name}";
+    location: 2;
+    icon-theme: "kanagawa";
+    disable-history: false;
+    hide-scrollbar: true;
+    display-drun: "Запустить:";
+    display-run: "Исполнить:";
+    display-window: " Найти:";
+    display-Network: " 󰤨  Network";
+    sidebar-mode: false;
+}
+@theme "/home/veter/.config/rofi/theme.rasi"
