@@ -10,7 +10,7 @@ done
 
 cfg="/home/$USER/.config/waybar/modules/cava/cava.config"
 cava -p $cfg | while read -r line; do
-	if [ "$(echo $line | sed $dict)" = "▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁" ]; then
+	if [ "$(echo $line | sed $dict)" = "▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁" ]; then
     	cat ~/.config/waybar/modules/weather/weather.txt
 	else
 		text_value=$(jq -r '.text' ~/.config/waybar/modules/weather/weather.txt)
