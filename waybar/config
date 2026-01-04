@@ -1,0 +1,62 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 30,
+    "spacing": 5,
+    "margin-top": 5,
+    "margin-left": 5,
+    "margin-right": 5,
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": ["custom/cen"],
+    "modules-right": ["network", "disk", "pulseaudio", "hyprland/language", "clock"],
+    
+    "hyprland/workspaces": {
+        "format": "{name}",
+        "format-icons": {
+            "active": " {name} ",
+            "default": " {name} ",
+            "urgent": " {name} "
+        },
+        "on-click": "activate",
+        "all-outputs": false
+    },
+    "custom/cen":{
+        "return-type": "json",
+        "on-click": "yandex-browser-stable --new-window 'https://yandex.ru/pogoda/ru'",
+        "format": "{}",
+        "min-length": 10,
+        "exec": "/home/$USER/.config/waybar/modules/cava/cava.sh"
+    },
+    "network": {
+        "format": "ᯤ {ifname}",
+        "format-ethernet": "ᯤ {ipaddr}",
+        "format-disconnected": "⚠",
+        "max-length": 50
+    },
+    
+    "disk": {
+        "interval": 30,
+        "format": "🖴 {free}",
+        "path": "/"
+    },
+    
+    "pulseaudio": {
+        "format": " {icon} {volume}%",
+        "format-muted": "🕪0%",
+        "format-icons": {
+            "default": ["🕪"]
+        },
+        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+    },
+    
+    "clock": {
+        "interval": 1,
+        "format": "{:%d-%m-%Y | %H:%M:%S}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+	"on-click": "zenity --calendar"
+    },
+    "hyprland/language": {
+      "format-en": "En",
+      "format-ru": "Ru"
+    }
+}
