@@ -8,7 +8,7 @@ do
     i=$((i=i+1))
 done
 
-cfg="/home/veter/.config/waybar/modules/cava/cava.config"
+cfg="/home/$USER/.config/waybar/modules/cava/cava.config"
 cava -p $cfg | while read -r line; do
 	if [ "$(echo $line | sed $dict)" = "▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁" ]; then
     	cat ~/.config/waybar/modules/weather/weather.txt

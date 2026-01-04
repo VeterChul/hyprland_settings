@@ -22,7 +22,7 @@
         "on-click": "yandex-browser-stable --new-window 'https://yandex.ru/pogoda/ru'",
         "format": "{}",
         "min-length": 10,
-        "exec": "/home/veter/.config/waybar/modules/cava/cava.sh"
+        "exec": "/home/$USER/.config/waybar/modules/cava/cava.sh"
     },
     "custom/weather": {
         "format": "{}",
