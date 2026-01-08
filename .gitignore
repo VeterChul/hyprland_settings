@@ -8,6 +8,7 @@ dolphinrc
 fish
 go
 gtk-3.0
+kconf_updaterc
 libreoffice
 mc
 menus
@@ -15,6 +16,8 @@ mimeapps.list
 mpv
 nautilus
 neofetch
+okularpartrc
+okularrc
 procps
 pulse
 QtProject.conf
