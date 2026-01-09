@@ -67,7 +67,7 @@ if __name__ == "__main__":
 
             sleep_time = 60
 
-            with open("/home/$USER/.config/waybar/modules/weather/weather_log.txt", "r") as f:
+            with open("/home/veter/.config/waybar/modules/weather/weather_log.txt", "r") as f:
                 info = loads(f.read().split("\n")[-2])
             info["error"] = True
             info["new"] = False
@@ -85,17 +85,17 @@ if __name__ == "__main__":
         j = {"text" : f"{info["new_s"]}Улица:{info["temp"]}C|Ощущается:{info["feels_like"]}C|{info["description"]}",
              "tooltip": f"Время зависи:{info["recording_time"]}",
              "class": "good"}
-        with open("/home/$USER/.config/waybar/modules/weather/weather.txt", 'w') as f:
+        with open("/home/veter/.config/waybar/modules/weather/weather.txt", 'w') as f:
             f.write(str_j(j))
 
 
-        with open("/home/$USER/.config/waybar/modules/weather/weather_log.txt", "r") as f:
+        with open("/home/veter/.config/waybar/modules/weather/weather_log.txt", "r") as f:
             if len(f.read().split("\n")) > 500:
                 r = "w"            
             else:
                 r = "a"
 
-        with open("/home/$USER/.config/waybar/modules/weather/weather_log.txt", r) as f:
+        with open("/home/veter/.config/waybar/modules/weather/weather_log.txt", r) as f:
             
             
             f.writelines(dumps(info) + "\n")
