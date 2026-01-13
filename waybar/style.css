@@ -36,8 +36,10 @@ window#waybar {
     margin: 0 3px;
 }
 
-#workspaces button:hover {
-    background-color: rgba(75, 0, 130, 0.3);
+#hyprland-workspaces button:hover {
+    background-color: rgba(75, 0, 130, 1);
+    color: #4B0082;
+    transition: background-color 0.2s ease;
 }
 
 #workspaces button.urgent {

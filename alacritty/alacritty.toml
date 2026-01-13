@@ -1,0 +1,99 @@
+# ~/.config/alacritty/alacritty.toml
+
+# Настройки шрифта
+[font]
+normal.family = "Comic Mono"
+size = 12.0
+
+# Основные цвета
+[colors.primary]
+foreground = "#ff00ff"
+background = "#0a0a0a"
+
+# Цвет курсора
+[colors.cursor]
+text = "#0a0a0a"
+cursor = "#00ffaa"
+
+# Выделение текста
+[colors.selection]
+text = "#ffffff"
+background = "#aa00aa"
+
+# Цвета ANSI (normal)
+[colors.normal]
+black   = "#1a1a1a"
+red     = "#ff00ff"
+green   = "#00ffaa"
+yellow  = "#f1fa8c"
+blue    = "#bd93f9"
+magenta = "#ff79c6"
+cyan    = "#8be9fd"
+white   = "#f8f8f2"
+
+# Цвета ANSI (bright)
+[colors.bright]
+black   = "#4a4a4a"
+red     = "#ff92d0"
+green   = "#33ffbb"
+yellow  = "#ffffa5"
+blue    = "#d6acff"
+magenta = "#ffa3e6"
+cyan    = "#a4ffff"
+white   = "#ffffff"
+
+# Дополнительные настройки
+window.opacity = 0.85
+window.decorations = "Full"  # no = hide_window_decorations no
+window.padding.x = 0
+window.padding.y = 0
+
+bell.audio = false  # enable_audio_bell no
+
+multiplier = 5.0  # wheel_scroll_multiplier
+history = 10000   # scrollback_lines
+
+# Клавиатурные сочетания (bindings)
+[[keyboard.bindings]]
+key = "C-S-C"  # ctrl+shift+c
+action = "Copy"
+
+[[keyboard.bindings]]
+key = "C-S-V"  # ctrl+shift+v
+action = "Paste"
+
+[[keyboard.bindings]]
+key = "C-Equals"  # ctrl+plus (на русской =)
+action = "IncreaseFontSize"
+mods = "Control"
+
+[[keyboard.bindings]]
+key = "C-Minus"
+action = "DecreaseFontSize"
+mods = "Control"
+
+[[keyboard.bindings]]
+key = "C-0"
+action = "ResetFontSize"
+mods = "Control"
+
+[[keyboard.bindings]]
+key = "S-PageUp"
+action = "ScrollPageUp"
+mods = "Shift"
+
+[[keyboard.bindings]]
+key = "S-PageDown"
+action = "ScrollPageDown"
+mods = "Shift"
+
+[[keyboard.bindings]]
+key = "C-S-K"
+action = "ScrollLineUp"
+mods = "Control|Shift"
+
+[[keyboard.bindings]]
+key = "C-S-J"
+action = "ScrollLineDown"
+mods = "Control|Shift"
+

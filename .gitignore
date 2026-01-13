@@ -8,6 +8,7 @@ dolphinrc
 fish
 go
 gtk-3.0
+kactivitymanagerdrc
 kconf_updaterc
 libreoffice
 mc
@@ -21,8 +22,10 @@ okularrc
 procps
 pulse
 QtProject.conf
+session
 user-dirs.dirs
 user-dirs.locale
+vlc
 yandex-browser
 YandexMusic
 yay
