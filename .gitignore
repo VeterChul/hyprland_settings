@@ -1,3 +1,4 @@
+alacritty
 arduino-ide
 Arduino IDE
 autostart
@@ -5,12 +6,14 @@ cava
 Code - OSS
 dconf
 dolphinrc
+filetypesrc
 fish
 go
 gtk-3.0
 kactivitymanagerdrc
 kconf_updaterc
 libreoffice
+matplotlib
 mc
 menus
 mimeapps.list
