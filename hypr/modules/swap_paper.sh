@@ -5,7 +5,7 @@ len_path=$(ls $path | wc -l)
 
 if [[ "$len_path" == 1 ]]; then
     paper=$(ls $path)
-    path_paper=$(echo "${path}${paper}")
+    path_paper=$(echo "${path}/${paper}")
     echo $paper
     swaybg -i "${path_paper}" &
 else
