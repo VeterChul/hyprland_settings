@@ -230,3 +230,7 @@
 {"error": true, "temp": -10, "feels_like": -13, "description": "\u041f\u0430\u0441\u043c\u0443\u0440\u043d\u043e", "new": false, "new_s": "*|", "time": "2026-01-15 15:03:15.343181", "recording_time": "2026-1-14 2:12:37"}
 {"error": true, "temp": -10, "feels_like": -13, "description": "\u041f\u0430\u0441\u043c\u0443\u0440\u043d\u043e", "new": false, "new_s": "*|", "time": "2026-01-15 15:09:37.926916", "recording_time": "2026-1-14 2:12:37"}
 {"error": true, "temp": -10, "feels_like": -13, "description": "\u041f\u0430\u0441\u043c\u0443\u0440\u043d\u043e", "new": false, "new_s": "*|", "time": "2026-01-15 19:07:40.230410", "recording_time": "2026-1-14 2:12:37"}
+{"error": true, "temp": -10, "feels_like": -13, "description": "\u041f\u0430\u0441\u043c\u0443\u0440\u043d\u043e", "new": false, "new_s": "*|", "time": "2026-01-16 21:30:26.595431", "recording_time": "2026-1-14 2:12:37"}
+{"error": true, "temp": -10, "feels_like": -13, "description": "\u041f\u0430\u0441\u043c\u0443\u0440\u043d\u043e", "new": false, "new_s": "*|", "time": "2026-01-17 08:41:31.736500", "recording_time": "2026-1-14 2:12:37"}
+{"error": true, "temp": -10, "feels_like": -13, "description": "\u041f\u0430\u0441\u043c\u0443\u0440\u043d\u043e", "new": false, "new_s": "*|", "time": "2026-01-17 08:42:31.738834", "recording_time": "2026-1-14 2:12:37"}
+{"error": true, "temp": -10, "feels_like": -13, "description": "\u041f\u0430\u0441\u043c\u0443\u0440\u043d\u043e", "new": false, "new_s": "*|", "time": "2026-01-17 14:50:28.938668", "recording_time": "2026-1-14 2:12:37"}
