@@ -6,7 +6,7 @@
 
 ## Установка
 
-Установить pac_inst.txt через pacman 
+### Установить pac_inst.txt через pacman 
 
 Arch:
 
@@ -21,7 +21,7 @@ xargs sudo apt install -y < pac_inst.txt
 ```
 
 
-Установить aur_inst.txt через любой пакетный менеджер для AUR
+### Установить aur_inst.txt через любой пакетный менеджер для AUR
 
 Arch:
 
@@ -35,7 +35,7 @@ Debian:
 xargs sudo apt install -y < aur_inst.txt
 ```
 
-Установка oh-my-zsh
+### Установка oh-my-zsh
 
 ```
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
