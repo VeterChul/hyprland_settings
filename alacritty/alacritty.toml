@@ -1,99 +1,164 @@
-# ~/.config/alacritty/alacritty.toml
+[env]
+TERM = "xterm-256color"
+WINIT_X11_SCALE_FACTOR = "1"
 
-# Настройки шрифта
-[font]
-normal.family = "Comic Mono"
-size = 12.0
+[window]
+dynamic_padding = true
+decorations = "full"
+title = "Alacritty@CachyOS"
+opacity = 0.8
+decorations_theme_variant = "Dark"
 
-# Основные цвета
+[window.dimensions]
+columns = 100
+lines = 30
+
+[window.class]
+instance = "Alacritty"
+general = "Alacritty"
+
+[scrolling]
+history = 10000
+multiplier = 3
+
+[colors]
+draw_bold_text_with_bright_colors = true
+
 [colors.primary]
-foreground = "#ff00ff"
-background = "#0a0a0a"
+background = "0x2E3440"
+foreground = "0xD8DEE9"
 
-# Цвет курсора
-[colors.cursor]
-text = "#0a0a0a"
-cursor = "#00ffaa"
-
-# Выделение текста
-[colors.selection]
-text = "#ffffff"
-background = "#aa00aa"
-
-# Цвета ANSI (normal)
 [colors.normal]
-black   = "#1a1a1a"
-red     = "#ff00ff"
-green   = "#00ffaa"
-yellow  = "#f1fa8c"
-blue    = "#bd93f9"
-magenta = "#ff79c6"
-cyan    = "#8be9fd"
-white   = "#f8f8f2"
+black = "0x3B4252"
+red = "0xBF616A"
+green = "0xA3BE8C"
+yellow = "0xEBCB8B"
+blue = "0x81A1C1"
+magenta = "0xB48EAD"
+cyan = "0x88C0D0"
+white = "0xE5E9F0"
 
-# Цвета ANSI (bright)
 [colors.bright]
-black   = "#4a4a4a"
-red     = "#ff92d0"
-green   = "#33ffbb"
-yellow  = "#ffffa5"
-blue    = "#d6acff"
-magenta = "#ffa3e6"
-cyan    = "#a4ffff"
-white   = "#ffffff"
+black = "0x4C566A"
+red = "0xBF616A"
+green = "0xA3BE8C"
+yellow = "0xEBCB8B"
+blue = "0x81A1C1"
+magenta = "0xB48EAD"
+cyan = "0x8FBCBB"
+white = "0xECEFF4"
 
-# Дополнительные настройки
-window.opacity = 0.85
-window.decorations = "Full"  # no = hide_window_decorations no
-window.padding.x = 0
-window.padding.y = 0
+[font]
+size = 12
 
-bell.audio = false  # enable_audio_bell no
+[font.normal]
+family = "monospace"
+style = "Regular"
 
-multiplier = 5.0  # wheel_scroll_multiplier
-history = 10000   # scrollback_lines
+[font.bold]
+family = "monospace"
+style = "Bold"
 
-# Клавиатурные сочетания (bindings)
+[font.italic]
+family = "monospace"
+style = "Italic"
+
+[font.bold_italic]
+family = "monospace"
+style = "Bold Italic"
+
+[selection]
+semantic_escape_chars = ",│`|:\"' ()[]{}<>\t"
+save_to_clipboard = true
+
+[cursor]
+style = "Underline"
+vi_mode_style = "None"
+unfocused_hollow = true
+thickness = 0.15
+
+[mouse]
+hide_when_typing = true
+
+[[mouse.bindings]]
+mouse = "Middle"
+action = "PasteSelection"
+
+[keyboard]
 [[keyboard.bindings]]
-key = "C-S-C"  # ctrl+shift+c
-action = "Copy"
-
-[[keyboard.bindings]]
-key = "C-S-V"  # ctrl+shift+v
+key = "Paste"
 action = "Paste"
 
 [[keyboard.bindings]]
-key = "C-Equals"  # ctrl+plus (на русской =)
-action = "IncreaseFontSize"
-mods = "Control"
+key = "Copy"
+action = "Copy"
 
 [[keyboard.bindings]]
-key = "C-Minus"
-action = "DecreaseFontSize"
+key = "L"
 mods = "Control"
+action = "ClearLogNotice"
 
 [[keyboard.bindings]]
-key = "C-0"
-action = "ResetFontSize"
+key = "L"
 mods = "Control"
+mode = "~Vi"
+chars = "\f"
 
 [[keyboard.bindings]]
-key = "S-PageUp"
+key = "PageUp"
+mods = "Shift"
+mode = "~Alt"
 action = "ScrollPageUp"
-mods = "Shift"
 
 [[keyboard.bindings]]
-key = "S-PageDown"
+key = "PageDown"
+mods = "Shift"
+mode = "~Alt"
 action = "ScrollPageDown"
+
+[[keyboard.bindings]]
+key = "Home"
 mods = "Shift"
+mode = "~Alt"
+action = "ScrollToTop"
 
 [[keyboard.bindings]]
-key = "C-S-K"
-action = "ScrollLineUp"
-mods = "Control|Shift"
+key = "End"
+mods = "Shift"
+mode = "~Alt"
+action = "ScrollToBottom"
 
 [[keyboard.bindings]]
-key = "C-S-J"
-action = "ScrollLineDown"
+key = "V"
 mods = "Control|Shift"
+action = "Paste"
 
+[[keyboard.bindings]]
+key = "C"
+mods = "Control|Shift"
+action = "Copy"
+
+[[keyboard.bindings]]
+key = "F"
+mods = "Control|Shift"
+action = "SearchForward"
+
+[[keyboard.bindings]]
+key = "B"
+mods = "Control|Shift"
+action = "SearchBackward"
+
+[[keyboard.bindings]]
+key = "C"
+mods = "Control|Shift"
+mode = "Vi"
+action = "ClearSelection"
+
+[[keyboard.bindings]]
+key = "Key0"
+mods = "Control"
+action = "ResetFontSize"
+
+[general]
+live_config_reload = true
+working_directory = "None"
