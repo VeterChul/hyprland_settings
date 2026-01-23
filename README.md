@@ -29,12 +29,6 @@ Arch:
 yay -S --needed $(cat aur_inst.txt)
 ```
 
-Debian:
-
-```
-xargs sudo apt install -y < aur_inst.txt
-```
-
 ### Установка oh-my-zsh
 
 ```
