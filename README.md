@@ -7,14 +7,26 @@
 ## Установка
 
 Установить pac_inst.txt через pacman 
+
 ```
 sudo pacman -S --needed $(cat pac_inst.txt)
 ```
+
 Установить aur_inst.txt через любой пакетный менеджер для AUR
+
+Arch
+
 ```
 yay -S --needed $(cat aur_inst.txt)
 ```
+Debian
+
+```
+xargs sudo apt install -y < file.txt
+```
+
 Установка oh-my-zsh
+
 ```
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
