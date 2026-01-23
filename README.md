@@ -8,21 +8,31 @@
 
 Установить pac_inst.txt через pacman 
 
+Arch:
+
 ```
 sudo pacman -S --needed $(cat pac_inst.txt)
 ```
 
+Debian:
+
+```
+xargs sudo apt install -y < pac_inst.txt
+```
+
+
 Установить aur_inst.txt через любой пакетный менеджер для AUR
 
-Arch
+Arch:
 
 ```
 yay -S --needed $(cat aur_inst.txt)
 ```
-Debian
+
+Debian:
 
 ```
-xargs sudo apt install -y < file.txt
+xargs sudo apt install -y < aur_inst.txt
 ```
 
 Установка oh-my-zsh
