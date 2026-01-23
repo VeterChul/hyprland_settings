@@ -17,7 +17,7 @@ yay -S --needed $(cat aur_inst.txt)
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
 
-после этого должны были установиться все пакеты, для орекной работы конфигов
+после этого должны были установиться все пакеты, для корекной работы конфигов
 
 ## Бинды
 
@@ -33,7 +33,6 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 ### Приложения
 | Комбинация | Действие |
 |------------|----------|
-| `WIN + D` | Rofi (менеджер приложений) |
 | `WIN + T` | Telegram |
 | `WIN + C` | VSCodium |
 | `WIN + Enter` | Терминал |
@@ -53,6 +52,8 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 ### Работа с приложениями
 | Комбинация | Действие |
 |------------|----------|
+| `WIN + D` | Rofi (запуск приложения) |
+| `WIN + SHIFT + D` | Rofi (переход к запущенному приложению) |
 | `WIN + Стрелка` | Сместить фокус |
 | `WIN + SHIFT + Стрелка` | Переместить приложение |
 | `WIN + CTRL + Стрелка` | Поменять размер прилоожения |
