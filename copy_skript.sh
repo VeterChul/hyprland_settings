@@ -1,3 +1,3 @@
-cp -r * ~/.config
-mv ~/.config/.p10k.zsh .p10k.zsh
-mv ~/.config/.zshrc .zshrc
+cp -r * ~/.config/
+mv .p10k.zsh ~/.p10k.zsh
+mv .zshrc ~/.zshrc

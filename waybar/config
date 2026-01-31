@@ -19,7 +19,7 @@
     },
     "custom/cen":{
         "return-type": "json",
-        "on-click": "yandex-browser-stable --new-window 'https://yandex.ru/pogoda/ru'",
+        "on-click": "rofi -show drun",
         "format": "{}",
         "min-length": 10,
         "exec": "/home/$USER/.config/waybar/modules/cava/cava.sh"

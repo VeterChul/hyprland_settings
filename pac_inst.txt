@@ -1,1 +1,1 @@
-kitty dolphin yazi rofi waybar swaybg mako python-requests hyprland hyprlock zsh 
+kitty dolphin yazi rofi waybar swaybg mako python-requests hyprland hyprlock zsh flameshot 
