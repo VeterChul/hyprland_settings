@@ -2,10 +2,12 @@ battery="BAT0"
 status=$(cat /sys/class/power_supply/$battery/status)
 capacity=$(cat /sys/class/power_supply/$battery/capacity)
 values=(10 30 50 70 90)
-icons=(" " " " " " " " " ")
+icons=("Разряжен! " "" "" "" "")
 charging_icon=""
 full_icon=""
 icon=""
+
+
 
 # Функция для преобразования часов в формат ЧЧ:ММ
 convert_to_hms() {
@@ -127,13 +129,13 @@ get_charge_time() {
 
 
 if [ "$status" = "Charging" ]; then
-    icon=":${capacity}"
+    icon=":${capacity}%"
     tooltip=$(get_charge_time)
 elif [ "$status" = "Full" ]; then
-    icon=":${full_icon}"
+    icon=":${full_icon}%"
     tooltip="Зарядка окончена"
 else
-    icon=":${capacity}"
+    icon="${icons[capacity/20]}:${capacity}%"
     tooltip=$(get_discharge_time)
 fi
 JSON=$(echo "{\"text\":\"${icon}\", \"tooltip\":\"${tooltip}\"}" | sed 's/&/\&amp;/g')

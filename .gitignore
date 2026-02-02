@@ -10,6 +10,7 @@ bpytop
 cachyos
 cachyos-hello.json
 cava
+configstore
 dconf
 dolphinrc
 filetypesrc
@@ -29,13 +30,14 @@ kded5rc
 kdedefaults
 kdeglobals
 kglobalshortcutsrc
+kiorc
 ksmserverrc
 ktimezonedrc
 kwinoutputconfig.json
 kwinrc
 libaccounts-glib
 libinput-gestures.conf
-libreoffice
+libreofficemako
 matplotlib
 mc
 menus
@@ -55,6 +57,7 @@ pulse
 QtProject.conf
 session
 systemmonitorrc
+trashrc
 Trolltech.conf
 user-dirs.dirs
 user-dirs.locale
