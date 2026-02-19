@@ -1,0 +1,10 @@
+status: 200
+date: Fri, 02 Jan 2026 15:48:22 GMT
+content-type: application/json; charset=utf-8
+content-length: 284
+access-control-allow-origin: *
+x-ttl: 60
+x-rl: 44
+content-location: http://ip-api.com/json/
+
+{"status":"success","country":"Russia","countryCode":"RU","region":"MOS","regionName":"Moscow Oblast","city":"Povarovo","zip":"141540","lat":56.0667,"lon":37.05,"timezone":"Europe/Moscow","isp":"OOO Net-Nord","org":"OOO Net-Nord","as":"AS198137 OOO Net-Nord","query":"91.231.233.187"}

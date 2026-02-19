@@ -1,0 +1,96 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 30,
+    "spacing": 5,
+    "margin-top": 5,
+    "margin-left": 5,
+    "margin-right": 5,
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": ["custom/cen"],
+    "modules-right": ["custom/wifi", "disk", "pulseaudio", "backlight", "custom/battery","hyprland/language", "clock"],
+   
+    "custom/wifi": {
+        "format": "{}",
+        "exec": "~/.config/waybar/modules/wifi.py",
+        "return-type": "json",
+        "on-click": "kitty sudo nmtui",
+        "interval": 1
+    },
+    "custom/cen":{
+        "return-type": "json",
+        "on-click": "rofi -show drun",
+        "format": "{}",
+        "min-length": 10,
+        "exec": "/home/$USER/.config/waybar/modules/cava/cava.sh"
+    },
+    "custom/weather": {
+        "format": "{}",
+        "exec": "~/.config/waybar/modules/weather/weather_read.sh",
+        "return-type": "json",
+        "on-click": "yandex-browser-stable --new-window 'https://yandex.ru/pogoda/ru'",
+        "interval": 1
+    },
+    "backlight": {
+        "format": "{icon} {percent}%",
+        "format-icons": ["", ""]
+    },
+    "custom/battery": {
+        "return-type": "json",
+        "exec": "~/.config/waybar/modules/battery/battery.sh",
+        "format": "{}",
+        "interval": 1
+    },
+
+    "hyprland/workspaces": {
+        "format": "{name}",
+        "format-icons": {
+            "active": " {name} ",
+            "default": " {name} ",
+            "urgent": " {name} "
+        },
+        "on-click": "activate",
+        "all-outputs": false
+    },
+    
+    "network": {
+        "format": "ᯤ {ifname}",
+        "format-ethernet": "ᯤ {ipaddr}",
+        "format-disconnected": "⚠",
+        "max-length": 50
+    },
+    
+    "disk": {
+        "interval": 30,
+        "format": "🖴 {free}",
+        "path": "/"
+    },
+    
+    "pulseaudio": {
+        "format": " {icon} {volume}%",
+        "format-muted": "🕪0%",
+        "format-icons": {
+            "default": ["🕪"]
+        },
+        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+    },
+    
+    "clock": {
+        "interval": 1,
+        "format": "{:%d-%m-%Y | %H:%M:%S}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+	"on-click": "zenity --calendar"
+    },
+    "hyprland/language": {
+      "format-en": "En",
+      "format-ru": "Ru"
+    },
+    "custom/combinated": {
+                "tooltip": false,
+                "on-click": "rofi -show drun",
+        "format": "{}",
+        "max-length": 41,
+        "min-length": 10,
+        "exec": "~/.config/waybar/modules/combinated.sh"
+    }
+}
