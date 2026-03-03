@@ -29,8 +29,10 @@ def weather(city, test_flag) -> str:
         
         url = f"https://wttr.in/{city}?format=j1"
         try:
+            print(url)
             response = requests.get(url)
             data = response.json()
+            print(data)
             
             temp = data["current_condition"][0]["temp_C"]
             feels_like = data["current_condition"][0]["FeelsLikeC"]

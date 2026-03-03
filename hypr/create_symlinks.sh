@@ -1,6 +1,11 @@
-for d in hypr/*/; do
+mkdir ~/.myconfig
+mkdir ~/.myconfig/hypr
+
+cp -r hypr/. ~/.myconfig/hypr/
+
+for d in ~/.myconfig/hypr/*/; do
     b=$(basename "$d")
     rm -rf "$HOME/.config/$b"
 done
 
-find hypr/ -maxdepth 1 -mindepth 1 -type d -exec ln -s -t ~/.config/ {} +
+find ~/.myconfig/hypr/ -maxdepth 1 -mindepth 1 -type d -exec ln -s -t ~/.config/ {} +
