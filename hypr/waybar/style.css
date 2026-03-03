@@ -59,7 +59,7 @@ window#waybar {
     margin: 0 5px;
 }
 
-#weather, #network, #disk, #wifi, #language, #clock, #window, #combinated, #backlight {
+#weather, #cen, #network, #disk, #wifi, #language, #clock, #window, #combinated, #backlight {
     border-radius: 5px;
     padding: 0 2px;
     margin: 0 3px;

@@ -329,3 +329,8 @@
 {"error": true, "temp": -10, "feels_like": -13, "description": "\u041f\u0430\u0441\u043c\u0443\u0440\u043d\u043e", "new": false, "new_s": "*|", "time": "2026-02-19 16:34:30.841498", "recording_time": "2026-1-14 2:12:37"}
 {"error": true, "temp": -10, "feels_like": -13, "description": "\u041f\u0430\u0441\u043c\u0443\u0440\u043d\u043e", "new": false, "new_s": "*|", "time": "2026-02-19 17:50:05.147115", "recording_time": "2026-1-14 2:12:37"}
 {"error": true, "temp": -10, "feels_like": -13, "description": "\u041f\u0430\u0441\u043c\u0443\u0440\u043d\u043e", "new": false, "new_s": "*|", "time": "2026-02-19 17:51:07.051346", "recording_time": "2026-1-14 2:12:37"}
+{"error": true, "temp": -10, "feels_like": -13, "description": "\u041f\u0430\u0441\u043c\u0443\u0440\u043d\u043e", "new": false, "new_s": "*|", "time": "2026-02-20 07:15:55.161628", "recording_time": "2026-1-14 2:12:37"}
+{"error": true, "temp": -10, "feels_like": -13, "description": "\u041f\u0430\u0441\u043c\u0443\u0440\u043d\u043e", "new": false, "new_s": "*|", "time": "2026-02-20 09:54:23.968467", "recording_time": "2026-1-14 2:12:37"}
+{"error": true, "temp": -10, "feels_like": -13, "description": "\u041f\u0430\u0441\u043c\u0443\u0440\u043d\u043e", "new": false, "new_s": "*|", "time": "2026-02-20 10:50:36.405916", "recording_time": "2026-1-14 2:12:37"}
+{"error": true, "temp": -10, "feels_like": -13, "description": "\u041f\u0430\u0441\u043c\u0443\u0440\u043d\u043e", "new": false, "new_s": "*|", "time": "2026-02-20 10:51:36.411466", "recording_time": "2026-1-14 2:12:37"}
+{"error": true, "temp": -10, "feels_like": -13, "description": "\u041f\u0430\u0441\u043c\u0443\u0440\u043d\u043e", "new": false, "new_s": "*|", "time": "2026-02-20 10:52:36.416555", "recording_time": "2026-1-14 2:12:37"}

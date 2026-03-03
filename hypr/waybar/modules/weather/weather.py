@@ -31,7 +31,7 @@ def weather(city, test_flag) -> str:
         try:
             response = requests.get(url)
             data = response.json()
-
+            
             temp = data["current_condition"][0]["temp_C"]
             feels_like = data["current_condition"][0]["FeelsLikeC"]
             description = quick_translate(data["current_condition"][0]["weatherDesc"][0]["value"])
@@ -63,6 +63,7 @@ if __name__ == "__main__":
         now = datetime.now()
         time_now = f"{now.year}-{now.month}-{now.day} {now.hour}:{now.minute}:{int(now.second)}"
         info = weather("Москва", False)
+        print(info)
         if info["error"]:
 
             sleep_time = 60
@@ -90,7 +91,7 @@ if __name__ == "__main__":
 
 
         with open("/home/veter/.config/waybar/modules/weather/weather_log.txt", "r") as f:
-            if len(f.read().split("\n")) > 500:
+            if len(f.read().split("\n")) > 100:
                 r = "w"            
             else:
                 r = "a"
