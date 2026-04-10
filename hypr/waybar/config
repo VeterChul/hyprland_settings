@@ -6,7 +6,7 @@
     "margin-top": 5,
     "margin-left": 5,
     "margin-right": 5,
-    "modules-left": ["hyprland/workspaces"],
+    "modules-left": ["hyprland/workspaces", "custom/active"],
     "modules-center": ["custom/cen"],
     "modules-right": ["custom/wifi", "disk", "pulseaudio", "backlight", "custom/battery","hyprland/language", "clock"],
    
@@ -17,12 +17,13 @@
         "on-click": "kitty sudo nmtui",
         "interval": 1
     },
-    "custom/cen":{
-        "return-type": "json",
+    "custom/active":{
         "on-click": "rofi -show drun",
         "format": "{}",
-        "min-length": 10,
-        "exec": "/home/$USER/.config/waybar/modules/cava/cava.sh"
+        "exec": "/home/$USER/.config/waybar/modules/combinated.sh",
+    "interval": 0.5,
+    "max-length": 50
+
     },
     "custom/weather": {
         "format": "{}",

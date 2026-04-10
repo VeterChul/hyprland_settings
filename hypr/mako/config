@@ -42,4 +42,4 @@ icons=1
 history=1
 markup=1
 group-by=app-name
-
+on-notify=exec /home/veter/.myconfig/hypr/mako/skript/mako-logger.sh "$id"

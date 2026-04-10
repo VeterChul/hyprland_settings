@@ -135,7 +135,7 @@ elif [ "$status" = "Full" ]; then
     icon=":${full_icon}%"
     tooltip="Зарядка окончена"
 else
-    icon="${icons[capacity/20]}:${capacity}%"
+	icon="${icons[capacity/20]}:${capacity}%"
     tooltip=$(get_discharge_time)
 fi
 JSON=$(echo "{\"text\":\"${icon}\", \"tooltip\":\"${tooltip}\"}" | sed 's/&/\&amp;/g')

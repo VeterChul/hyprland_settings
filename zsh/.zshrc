@@ -23,7 +23,7 @@ alias c='clear'
 alias ls='lsd'
 alias la='lsd -a'
 alias ll='lsd -l'
-
+alias sshk="kitty +kitten ssh"
 
 
 
