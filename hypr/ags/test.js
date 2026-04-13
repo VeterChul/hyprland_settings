@@ -1,19 +1,7 @@
-// test.js
-import { App, Gtk, Widget } from 'astal';
-
-function MyTestWidget() {
-  return Widget.Window({
-    name: "test-window",
-    anchor: Gtk.CornerType.TOP | Gtk.CornerType.LEFT | Gtk.CornerType.RIGHT,
-    exclusivity: "exclusive",
-    child: Widget.Label({
-      label: "Hello from AGS!",
-    }),
-  });
-}
+import { App } from 'astal';
 
 App.start({
-  main() {
-    MyTestWidget();
-  },
+    main() {
+        console.log('Astal works!');
+    },
 });
