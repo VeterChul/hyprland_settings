@@ -24,7 +24,7 @@ sudo pacman -S zsh
 
 ### Установка oh-my-zsh
 
-Я всегда устанавливаю oh-my-zsh через curl, но на [сайте](https://ohmyz.sh/) есть и другие варианты
+Я всегда устанавливаю oh-my-zsh через curl, но на [сайте](https://ohmyz.sh/) есть и другие варианты(опцианально и не нужно для настроки моих настроек)
 
 ```
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -77,5 +77,5 @@ right_segments
 p10k configure
 ```
  
-Не забудьте скачать расширение на тему.
+Не забудьте скачать расширение на тему(подробнее на oh-my-zsh).
 

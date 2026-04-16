@@ -1,1 +1,1 @@
-yandex-browser-stable telegram-desktop vscodium-bin 
+zen-browser  yandex-browser-stable telegram-desktop vscodium-bin ferdium
