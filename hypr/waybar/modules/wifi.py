@@ -18,7 +18,8 @@ def get_wifi_info():
             if line.startswith('да:'):
                 _, ssid, signal, speed = line.split(':')
                 signal_int = int(signal)
-                bars = bar[:signal_int * (len(bar))//101 + 1]
+                # bars = bar[:signal_int * (len(bar))//101 + 1]
+                bars = "ᯤ " + str(signal_int)+ "%"
                 class_name = "warning"
                 if signal_int > 50:
                     class_name = "good"
