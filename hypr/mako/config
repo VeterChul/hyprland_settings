@@ -1,15 +1,15 @@
 # ========== ОСНОВНЫЕ НАСТРОЙКИ ==========
-font=Comic Mono 10
-width=300
-height=100
-margin=5,5
+font=Comic Mono 8
+width=600
+height=300
+margin=0,2
 padding=20
 border-size=1
 border-radius=10
 
 # ========== ЦВЕТОВАЯ СХЕМА ==========
 # Фон и текст
-background-color=#000000
+background-color=#000000DF
 text-color=#ff00ff
 border-color=#ff00ff
 
@@ -42,4 +42,6 @@ icons=1
 history=1
 markup=1
 group-by=app-name
-on-notify=exec /home/veter/.myconfig/hypr/mako/skript/mako-logger.sh "$id"
+on-notify=exec /home/veter/.myconfig/hypr/mako/skript/mako-logger.py "$id"
+
+markup=1
