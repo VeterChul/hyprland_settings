@@ -142,8 +142,38 @@ exit_status_prompt() {
 }
 
 # Путь к вашей папке с картинками
-IMAGE_DIR="$HOME/.oh-my-zsh/themes/pic"
+IMAGE_DIR_1="$HOME/.oh-my-zsh/themes/pic/1"
+IMAGE_DIR_2="$HOME/.oh-my-zsh/themes/pic/2"
 
+if [ $((RANDOM % 2)) -eq 0 ]; then
+  images=( $IMAGE_DIR_1/*.(webp|png|jpg|jpeg|gif|PNG|JPG|JPEG|GIF)(N) )
+
+  # Если есть хотя бы одна картинка
+  if (( ${#images} > 0 )); then
+      # Случайный индекс (zsh: индексация с 1)
+      random_index=$(( RANDOM % ${#images} + 1 ))
+      random_image=$images[$random_index]
+      height=$(( RANDOM % 11 + 15 ))
+      # Вывод через chafa
+      chafa --format symbols --symbols block --size x$height "$random_image"
+      #chafa --size x$height "$random_image"
+  fi
+    
+else
+  images=( $IMAGE_DIR_2/*.(webp|png|jpg|jpeg|gif|PNG|JPG|JPEG|GIF)(N) )
+
+  # Если есть хотя бы одна картинка
+  if (( ${#images} > 0 )); then
+      # Случайный индекс (zsh: индексация с 1)
+      random_index=$(( RANDOM % ${#images} + 1 ))
+      random_image=$images[$random_index]
+      height=$(( RANDOM % 11 + 15 ))
+      # Вывод через chafa
+      #hafa --format symbols --symbols block --size x$height "$random_image"
+      chafa --size x$height "$random_image"
+  fi
+
+fi
 # Массив файлов с расширениями (nullglob включён через (N))
 images=( $IMAGE_DIR/*.(webp|png|jpg|jpeg|gif|PNG|JPG|JPEG|GIF)(N) )
 
@@ -155,6 +185,7 @@ if (( ${#images} > 0 )); then
     height=$(( RANDOM % 11 + 15 ))
     # Вывод через chafa
     chafa --format symbols --symbols block --size x$height "$random_image"
+    #chafa --size x$height "$random_image"
 fi
 
 # --- Определяем левые сегменты (порядок: фон, цвет текста, содержимое) ---
