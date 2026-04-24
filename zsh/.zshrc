@@ -125,3 +125,24 @@ source $ZSH/oh-my-zsh.sh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=13'
+
+# --- zsh-syntax-highlighting Configuration ---
+# Изменяем цвета некоторых элементов для лучшей видимости
+typeset -A ZSH_HIGHLIGHT_STYLES
+
+# Делаем обычные команды (ls, cd) белыми и жирными
+ZSH_HIGHLIGHT_STYLES[command]='fg=2,bold'
+
+# Делаем опции команд (например, -l) заметными (желтыми и жирными)
+ZSH_HIGHLIGHT_STYLES[commandoption]='fg=2,bold'
+
+# Неизвестные команды или ошибки выделяем ярко-розовым
+ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=1,bold'
+
+# Пути к существующим файлам
+ZSH_HIGHLIGHT_STYLES[path]='fg=4,underline'
+
+# Цифры в командах (например, 123)
+ZSH_HIGHLIGHT_STYLES[numeric]='fg=14,bold'
