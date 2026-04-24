@@ -1,0 +1,35 @@
+{
+    "name": "Neon Violet Black",
+    "author": "Kitty putple",
+    "colors": {
+        "r": 255, "g": 0, "b": 255,
+        "black": "#000000",
+        "light_black": "#1a1a1a",
+        "grey": "#000000"
+    },
+    "cssvars": {
+        "font_main": "sans-serif",
+        "font_main_light": "sans-serif"
+    },
+    "terminal": {
+        "fontFamily": "Comic Mono",
+        "fontSize": 15,
+        "fontWeight": "normal",
+        "fontWeightBold": "bold",
+        "letterSpacing": 0,
+        "lineHeight": 1,
+        "cursorStyle": "block",
+        "cursorBlink": true,
+        "foreground": "#ff00ff",
+        "background": "#000000",
+        "cursor": "#00ffaa",
+        "cursorAccent": "#ff00ff",
+        "selection": "#ff00ff"
+    },
+    "globe": {
+        "base": "#000000",
+        "marker": "#ff00ff",
+        "pin": "#00ffaa",
+        "satellite": "#ff00ff"
+    }
+}
