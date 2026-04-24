@@ -8,7 +8,7 @@
     "audio": true,
     "audioVolume": 1,
     "disableFeedbackAudio": false,
-    "pingAddr": "94.140.14.14",
+    "pingAddr": "1.1.1.1",
     "clockHours": 24,
     "port": 3000,
     "monitor": 0,
