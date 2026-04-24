@@ -100,7 +100,9 @@ exec-once = swaybg -i /home/veter/.myconfig/hypr/.screenshot/night_city.jpg
 | `WIN + T` | ferdium |
 | `WIN + SHIFT + T` | Telegram |
 | `WIN + C` | VSCodium |
-| `WIN + Enter` | Терминал |
+| `WIN + Enter` | kitty |
+| `WIN + SHIFT + Enter` | cool-retro-term |
+| `WIN + CTRL + Enter` | eDEX-UI |
 
 #### Файлы
 | Комбинация | Действие |
@@ -144,3 +146,12 @@ exec-once = swaybg -i /home/veter/.myconfig/hypr/.screenshot/night_city.jpg
 |  `waybar` | Настроки панели сверху |
 | `.p10k.zsh` | Настроки темы zsh |
 | `.zshc` | Настроки zsh |
+
+
+# PS
+
+мне очень не понравилось наличие звуков переключения папки в eDUX-UI и я их вырезал.
+Если хотите так же, скопируйте 
+```
+sudo cp ~/.myconfig/hypr/eDEX-UI/my_file/edex-ui-mod.asar /opt/edex-ui/resources/app.asar
+```
