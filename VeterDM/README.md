@@ -109,7 +109,7 @@ reboot
 Пример сессии:
 
 ```
-[14:05:28] alex@Plasma p> 
+[14:05:23] veter@Hyprland p> 
 [14:05:23] veter@Hyprland c> changeuser alex
 [14:05:25] alex@Hyprland c> changede plasma
 [14:05:28] alex@Plasma c> exit
