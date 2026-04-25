@@ -1,6 +1,6 @@
 [terminal]
-vt = 1
+vt = 7
 
 [default_session]
 user = "greeter"
-command = "cage -s -d -- /usr/bin/cool-retro-term --fullscreen --profile your-retro-profile -e /path/to/your/greeter.py"
+command = "/usr/local/bin/start-greeter.sh"
