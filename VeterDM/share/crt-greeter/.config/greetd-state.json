@@ -1,6 +1,5 @@
 {
-  "last_user": "testuser",
-  "last_de": "TestDE",
-  "last_de_cmd": "/usr/bin/test",
-  "time": "2026-04-25 14:08:32"
+  "user": "veter",
+  "cmd": "Hyprland",
+  "cmd_exec": "/usr/bin/start-hyprland"
 }

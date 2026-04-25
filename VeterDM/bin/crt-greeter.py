@@ -9,11 +9,15 @@ import json
 import os
 import sys
 from datetime import datetime
-
 import socket
 import struct
-import json
-import os
+from prompt_toolkit import PromptSession
+from prompt_toolkit.completion import WordCompleter, NestedCompleter
+from prompt_toolkit.history import FileHistory
+from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
+from prompt_toolkit.styles import Style
+from prompt_toolkit.formatted_text import HTML
+import time
 
 def send_greetd_command(sock, cmd_dict):
     """Отправляет JSON-команду в сокет greetd, используя native byte order."""
@@ -124,14 +128,14 @@ def load_state():
         with open(state_file, 'r', encoding='utf-8') as f:
             data = json.load(f)
         # Проверяем наличие всех необходимых ключей
-        if 'last_user' in data and 'last_de' in data and 'last_de_cmd' in data and 'time' in data:
+        if 'user' in data and 'cmd' in data and 'cmd_exec' in data:
             return data
         else:
             return None
     except (json.JSONDecodeError, IOError):
         return None
 
-def save_state(user, de_name, de_cmd):
+def save_state(BD):
     """
     Сохраняет состояние в JSON-файл.
     - user: имя пользователя (строка)
@@ -139,14 +143,8 @@ def save_state(user, de_name, de_cmd):
     - de_cmd: команда запуска окружения (например "Hyprland")
     """
     state_file = get_state_file_path()
-    data = {
-        'last_user': user,
-        'last_de': de_name,
-        'last_de_cmd': de_cmd,
-        'time':datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    }
     with open(state_file, 'w', encoding='utf-8') as f:
-        json.dump(data, f, indent=2)
+        json.dump(BD, f, indent=2)
     # Устанавливаем безопасные права: только владелец (600)
     os.chmod(state_file, 0o600)
 
@@ -180,15 +178,22 @@ def get_desktop_environments():
             # Простой парсинг .desktop файла
             name = None
             exec_cmd = None
+            
+            if "TryExec" in Path(desktop_file).read_text():
+                exec_str = "TryExec"
+                n = 8
+            else:
+                exec_str = "Exec"
+                n=5
+
             with open(desktop_file, 'r', encoding='utf-8') as f:
                 for line in f:
                     line = line.strip()
                     if line.startswith('Name='):
                         name = line[5:].strip()
-                    elif line.startswith('Exec='):
-                        exec_cmd = line[5:].strip()
+                    elif line.startswith(f'{exec_str}='):
+                        exec_cmd = line[n:].strip()
                         # Удаляем возможные аргументы типа %u, %U, %F и т.д.
-                        exec_cmd = exec_cmd.split()[0]  # берём только команду без аргументов
                     if name and exec_cmd:
                         break
             if name and exec_cmd:
@@ -201,12 +206,123 @@ def get_desktop_environments():
     sessions.sort(key=lambda x: x["name"])
     return sessions
 
-if __name__ == "__main__":
-    print("GREETD_SOCK:", os.environ.get('GREETD_SOCK'), flush=True)
-    if authenticate_and_start_session("veter", "26022011", ["Hyprland"]):
-        print("Соединение работает")
+def get_DE_dict(DE_json):
+    DE_dict = {}
+    for i in DE_json:
+        DE_dict[i["name"]] = i["exec"]
+    return DE_dict
+
+def get_prompt():
+    """Создам промт для строки терминала"""
+    now = datetime.now().strftime("%H:%M:%S")
+    if mode:
+        s = "p"
     else:
-        print("Соединение не установлено")
-    import time
-    time.sleep(60)  # чтобы терминал не закрылся сразу
-    sys.exit(0)
+        s = "c"
+    return HTML(f"[{now}] {BD["user"]}@{BD["cmd"]} {s}<blinking>></blinking> ")
+
+users_list = get_user_list()                    
+DE_json = get_desktop_environments()    
+des_names = [de['name'] for de in DE_json]
+
+# Создаём completer для командного режима
+from prompt_toolkit.completion import WordCompleter, NestedCompleter
+completer = NestedCompleter.from_nested_dict({
+    'changeuser': WordCompleter(users_list, ignore_case=True),
+    'changede': WordCompleter(des_names, ignore_case=True),
+    'exit': None,
+    'help': None,
+})
+
+
+def repl():
+
+    global BD, mode, DE_dict, DE_json
+
+    help_str = '''Текст help'''
+
+    custom_style = Style([
+        ('blinking', 'blink'),
+    ])
+
+
+    # Создаём сессию для пароля (скрытый ввод, без истории)
+    # Для этого используем PromptSession с is_password=True
+    password_session = PromptSession(
+        is_password=True,
+        style=custom_style,
+        # истории НЕТ, чтобы пароль не сохранялся
+    )
+
+    cmd_session = PromptSession(
+        completer=completer,
+        history=FileHistory('/tmp/crt-greeter-history'),
+        style=custom_style,
+        auto_suggest=AutoSuggestFromHistory()
+    )
+
+    while True:
+        # ----- РЕЖИМ ПАРОЛЯ -----
+        
+        try:
+            if mode:
+                user_input = password_session.prompt(get_prompt)
+            else:    
+                user_input = cmd_session.prompt(get_prompt)
+        except (KeyboardInterrupt, EOFError):
+            continue
+        
+        user_input = user_input.strip()
+        if user_input == "":
+            pass
+        elif user_input == ":" and mode:
+            mode = False
+        elif mode:
+            # В режиме пароля считаем, что пользователь ввёл пароль
+            password = user_input
+            if authenticate_and_start_session(BD["user"], password, BD["cmd_exec"]):
+                save_state(BD)
+                sys.exit(0)
+            else:
+                print("Ошибка входа")
+                continue
+        elif not(mode):
+            list_user_input = user_input.split(" ")
+
+            match list_user_input[0]:
+                case "exit":
+                    mode = True
+                    continue
+                case "q":
+                    if test_flag:
+                        exit()
+                case "help":
+                    print(help_str)
+                case "changede":
+                    list_user_input_ar = " ".join(list_user_input[1:])
+                    if list_user_input_ar in DE_dict:
+                        BD["cmd"] = list_user_input_ar
+                        BD["cmd_exec"] = DE_dict[BD["cmd"]]
+                        print(f"DE сменина на {BD["cmd"]}")
+                    else:
+                        print("Неправильный аргумент")
+                case "changeuser":
+                    if len(list_user_input) == 2:
+                        BD["user"] = list_user_input[1]
+                        print(f"Пользователь сменен на {BD["user"]}")
+                    else:
+                        print("SyntaxError ")
+                case _:
+                    print(f"Неизвестная команда: {user_input}")
+
+if __name__ == "__main__":
+    
+    mode = True
+    test_flag = 1
+    DE_dict = get_DE_dict(DE_json)
+
+    BD = load_state()
+    
+    print(DE_json)
+
+    repl()
