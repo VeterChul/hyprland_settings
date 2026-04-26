@@ -48,7 +48,7 @@ sudo chmod 755 -R /opt/VeterDM/
 
 sudo rm -rf $REPO_DIR
 
-./VeterDM/create-link.sh
+./opt/VeterDM/create-link.sh
 
 # 5. Права на скрипты
 sudo chmod +x /usr/local/bin/crt-greeter.py
