@@ -57,12 +57,26 @@ chmod +x install.sh
 ВАЖНО!
 
 Скрипт не отключает предыдущий DM.
-Сделайте это сами, после чего добавте новый в автозапукс
+Сделайте это сами, после чего добавте новый в автозапукс. Проверьте, что все рабоает, прежде чем менять DM.
 
 ```
 sudo rm -f /etc/systemd/system/display-manager.service
 sudo systemctl enable --now greetd.service
 ```
+
+### Проверка
+
+Поменяте TTY, для тестов:
+В файле [../VeterDM/share/greetd/config.toml](../VeterDM/share/greetd/config.toml) измените vt например на 7:
+```
+vt = 7
+```
+После чего запустите VeterDM
+```
+sudo systemctl start greetd.service
+```
+Если все штатно отработало и сессия запустилась, то поменяте vt обратно и спенимет DM по инструкции выше
+
 
 ### Перезагрузка
 
