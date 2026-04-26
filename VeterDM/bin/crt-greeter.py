@@ -385,4 +385,10 @@ if __name__ == "__main__":
 
     print(hello)
 
-    repl()
+    try:
+        repl()
+    except (KeyboardInterrupt, EOFError):
+        continue
+    
+    
+   

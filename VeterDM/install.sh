@@ -13,7 +13,7 @@ echo -e "${GREEN}=== Установка кастомного greeter (CRT Greete
 
 # 1. Установка пакетов
 echo "Установка greetd, cage, seatd, python-prompt-toolkit..."
-sudo pacman -S --noconfirm greetd cage seatd python-prompt_toolkit
+sudo pacman -S --noconfirm greetd cage seatd python-prompt_toolkit mpg123
 
 # 2. Создание пользователя greeter (если не существует)
 if ! id -u greeter >/dev/null 2>&1; then
