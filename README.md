@@ -21,7 +21,7 @@
 Склонируйте репозиторий в `~/.myconfig`:
 
 ```bash
-git clone https://github.com/ваш-username/myconfig.git ~/.myconfig
+git clone https://github.com/VeterChul/hyprland_settings ~/.myconfig
 ```
 
 ### Автоматическая установка всех компонентов
