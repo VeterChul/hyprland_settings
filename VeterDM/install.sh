@@ -13,7 +13,7 @@ echo -e "${GREEN}=== Установка кастомного greeter (CRT Greete
 
 # 1. Установка пакетов
 echo "Установка greetd, cage, seatd, python-prompt-toolkit..."
-sudo pacman -S --noconfirm greetd cage seatd python-prompt-toolkit
+sudo pacman -S --noconfirm greetd cage seatd python-prompt_toolkit
 
 # 2. Создание пользователя greeter (если не существует)
 if ! id -u greeter >/dev/null 2>&1; then
@@ -37,7 +37,17 @@ if [ ! -d "$REPO_DIR" ]; then
     exit 1
 fi
 
+
+echo "Копирование файлов из $REPO_DIR в /opt/VeterDM"
 echo "Создание симлинков из $REPO_DIR в системные каталоги..."
+
+sudo mkdir /opt/VeterDM/
+sudo cp -r $REPO_DIR/. /opt/VeterDM/
+sudo chown -R greeter:greeter /opt/VeterDm
+sudo chmod 755 -R /opt/VeterDM
+
+sudo rm -rf $REPO_DIR
+
 ./VeterDM/create-link.sh
 
 # 5. Права на скрипты
@@ -50,19 +60,6 @@ echo "Настройка прав для аутентификации..."
 sudo chmod u+s /usr/bin/unix_chkpwd 2>/dev/null || true
 if getent group shadow >/dev/null; then
     sudo usermod -a -G shadow greeter
-fi
-
-# Настройка ACL для доступа greeter к репозиторию (если используется симлинки из ~)
-if [ -d "$HOME/.myconfig/VeterDM" ]; then
-    echo "Настройка ACL для доступа greeter к домашнему репозиторию..."
-    sudo setfacl -m u:greeter:x /home
-    sudo setfacl -m u:greeter:x $HOME
-    sudo setfacl -m u:greeter:x $HOME/.myconfig
-    sudo setfacl -m u:greeter:x $HOME/.myconfig/VeterDM
-    sudo setfacl -m u:greeter:rx $HOME/.myconfig/VeterDM/bin
-    sudo setfacl -m u:greeter:rx $HOME/.myconfig/VeterDM/share
-    sudo setfacl -m u:greeter:r $HOME/.myconfig/VeterDM/bin/*
-    sudo setfacl -R -m u:greeter:r $HOME/.myconfig/VeterDM/share/*
 fi
 
 echo "Настройка прав на /var/lib/crt-greeter..."
