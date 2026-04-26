@@ -43,8 +43,8 @@ echo "Создание симлинков из $REPO_DIR в системные �
 
 sudo mkdir /opt/VeterDM/
 sudo cp -r $REPO_DIR/. /opt/VeterDM/
-sudo chown -R greeter:greeter /opt/VeterDm
-sudo chmod 755 -R /opt/VeterDM
+sudo chown -R greeter:greeter /opt/VeterDM
+sudo chmod 755 -R /opt/VeterDM/
 
 sudo rm -rf $REPO_DIR
 

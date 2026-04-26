@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo ln -s /opt/VeterDM ~/.myconfig
+sudo ln -s /opt/VeterDM ~/.myconfig/
 
 sudo unlink /etc/greetd/config.toml
 sudo ln -s /opt/VeterDM/share/greetd/config.toml /etc/greetd/ 
