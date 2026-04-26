@@ -1,1 +1,1 @@
-zen-browser  yandex-browser-stable telegram-desktop vscodium-bin ferdium
+zen-browser  yandex-browser-stable telegram-desktop vscodium-bin ferdium cool-retro-term-git edex-ui-bin

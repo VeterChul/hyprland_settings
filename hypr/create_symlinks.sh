@@ -1,7 +1,4 @@
-mkdir ~/.myconfig
-mkdir ~/.myconfig/hypr
-
-cp -r hypr/. ~/.myconfig/hypr/
+#~/bin/bash
 
 for d in ~/.myconfig/hypr/*/; do
     b=$(basename "$d")

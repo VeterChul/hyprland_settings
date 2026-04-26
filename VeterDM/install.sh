@@ -1,4 +1,7 @@
 #!/bin/bash
+
+sudo chmod 750 -R VeterDM
+
 set -e  # прерывать при ошибке
 
 # Цветной вывод
@@ -35,7 +38,7 @@ if [ ! -d "$REPO_DIR" ]; then
 fi
 
 echo "Создание симлинков из $REPO_DIR в системные каталоги..."
-./create-link.sh
+./VeterDM/create-link.sh
 
 # 5. Права на скрипты
 sudo chmod +x /usr/local/bin/crt-greeter.py
