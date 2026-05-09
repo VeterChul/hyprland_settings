@@ -1,0 +1,72 @@
+# Настройки шрифта
+font_family Comic Mono 
+font_size 12.0
+
+# Основные цвета
+foreground #ff00ff
+background #000000
+
+# Цвет курсора
+cursor #00ffaa
+cursor_text_color #0a0a0a
+
+# Выделение текста
+selection_foreground #ffffff
+selection_background #aa00aa
+
+# Цвета ANSI
+color0  #555 
+# черный (фоновый)
+color1  #ff00ff 
+# красный - более контрастный
+color2  #00ffaa 
+# зеленый - ваш любимый цвет
+color3  #f1fa8c  
+# желтый - хорошая читаемость
+color4  #bd93f9  
+# синий - фиолетовый оттенок
+color5  #ff79c6 
+# пурпурный - розово-фиолетовый
+color6  #8be9fd  
+# голубой - контрастный
+color7  #f8f8f2  
+# белый - основной текст
+
+color8  #4a4a4a  
+# яркий черный (серый)
+color9  #ff92d0  
+# яркий красный
+color10 #33ffbb  
+# яркий зеленый - производный от 00ffaa
+color11 #ffffa5  
+# яркий желтый
+color12 #d6acff  
+# яркий синий - светлый фиолетовый
+color13 #ffa3e6  
+# яркий пурпурный
+color14 #a4ffff  
+# яркий голубой
+color15 #ffffff
+
+ 
+# Дополнительные настройки
+background_opacity 0.5
+hide_window_decorations no
+enable_audio_bell no
+scrollback_lines 10000
+wheel_scroll_multiplier 5.0
+
+# Сочетания клавиш для копирования/вставки
+map ctrl+shift+c copy_to_clipboard
+map ctrl+shift+v paste_from_clipboard
+
+# Изменение размера шрифта
+map ctrl+plus change_font_size all +2.0
+map ctrl+minus change_font_size all -2.0
+map ctrl+0 change_font_size all 0
+
+# Прокрутка
+map shift+page_up scroll_page_up
+map shift+page_down scroll_page_down
+map ctrl+shift+k scroll_line_up
+map ctrl+shift+j scroll_line_down

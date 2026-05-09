@@ -11,7 +11,7 @@
 }
 
 window {
-	y-offset: -35px;
+	y-offset: -25px;
 	margin: 2px;
 	padding: 2px;
     	background-color: @f-c;	
