@@ -1,1 +1,1 @@
-kitty dolphin yazi rofi waybar swaybg mako python-requests hyprland hyprlock zsh flameshot brightnessctl grim
+kitty dolphin yazi rofi waybar swaybg hyprland hyprlock zsh flameshot brightnessctl grim thunar networkmanager

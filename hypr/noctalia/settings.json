@@ -204,7 +204,7 @@
                     "deviceNativePath": "__default__",
                     "displayMode": "graphic",
                     "hideIfIdle": false,
-                    "hideIfNotDetected": true,
+                    "hideIfNotDetected": false,
                     "id": "Battery",
                     "showNoctaliaPerformance": false,
                     "showPowerProfiles": true
@@ -219,13 +219,13 @@
                     "displayMode": "forceOpen",
                     "iconColor": "none",
                     "id": "KeyboardLayout",
-                    "showIcon": false,
+                    "showIcon": true,
                     "textColor": "none"
                 },
                 {
                     "clockColor": "none",
                     "customFont": "",
-                    "formatHorizontal": "MMM dd, ddd, HH:mm:ss",
+                    "formatHorizontal": "MMM dd, ddd, HH:mm:ss | dd-MM-yyyy",
                     "formatVertical": "HH mm ss - dd MM",
                     "id": "Clock",
                     "tooltipFormat": "HH:mm ddd, MMM dd",
@@ -347,16 +347,16 @@
                 "widgets": [
                     {
                         "colorName": "primary",
-                        "height": 72,
-                        "hideWhenIdle": false,
+                        "height": 100,
+                        "hideWhenIdle": true,
                         "id": "AudioVisualizer",
                         "roundedCorners": true,
-                        "scale": 1.8156034779248582,
+                        "scale": 1.7907258409096753,
                         "showBackground": true,
                         "visualizerType": "linear",
                         "width": 320,
-                        "x": 660,
-                        "y": 920
+                        "x": 320,
+                        "y": 880
                     },
                     {
                         "clockColor": "none",
@@ -365,23 +365,23 @@
                         "format": "HH:mm:ss\\nd MMMM yyyy",
                         "id": "Clock",
                         "roundedCorners": true,
-                        "scale": 1.972234995653316,
+                        "scale": 2.2624249895262016,
                         "showBackground": true,
                         "useCustomFont": true,
-                        "x": 1020,
+                        "x": 480,
                         "y": 180
                     },
                     {
                         "hideMode": "visible",
                         "id": "MediaPlayer",
                         "roundedCorners": true,
-                        "scale": 1.4484419646415625,
+                        "scale": 1.4096984055890498,
                         "showAlbumArt": true,
                         "showBackground": true,
                         "showButtons": true,
                         "showVisualizer": true,
                         "visualizerType": "linear",
-                        "x": 660,
+                        "x": 320,
                         "y": 40
                     },
                     {
@@ -389,19 +389,45 @@
                         "id": "SystemStat",
                         "layout": "bottom",
                         "roundedCorners": true,
-                        "scale": 1.0899535579712574,
+                        "scale": 1.0621848854184108,
                         "showBackground": true,
                         "statType": "CPU",
-                        "x": 660,
-                        "y": 180
+                        "x": 500,
+                        "y": 580
                     },
                     {
                         "id": "Weather",
                         "roundedCorners": true,
                         "scale": 2.384032624499013,
                         "showBackground": true,
-                        "x": 660,
-                        "y": 340
+                        "x": 320,
+                        "y": 360
+                    },
+                    {
+                        "clockColor": "none",
+                        "clockStyle": "digital",
+                        "customFont": "",
+                        "format": "HH:mm\\nd MMMM yyyy",
+                        "id": "Clock",
+                        "roundedCorners": true,
+                        "scale": 1.018653624201614,
+                        "showBackground": true,
+                        "useCustomFont": true,
+                        "x": 320,
+                        "y": 180
+                    },
+                    {
+                        "clockColor": "none",
+                        "clockStyle": "analog",
+                        "customFont": "",
+                        "format": "HH:mm\\nd MMMM yyyy",
+                        "id": "Clock",
+                        "roundedCorners": true,
+                        "scale": 1,
+                        "showBackground": true,
+                        "useCustomFont": false,
+                        "x": 740,
+                        "y": 180
                     }
                 ]
             }
@@ -523,12 +549,12 @@
         "enabled": true,
         "fadeDuration": 10,
         "lockCommand": "",
-        "lockTimeout": 660,
+        "lockTimeout": 2460,
         "resumeLockCommand": "",
         "resumeScreenOffCommand": "",
         "resumeSuspendCommand": "",
         "screenOffCommand": "",
-        "screenOffTimeout": 600,
+        "screenOffTimeout": 2400,
         "suspendCommand": "",
         "suspendTimeout": 1800
     },
@@ -550,12 +576,12 @@
     },
     "network": {
         "bluetoothAutoConnect": true,
-        "bluetoothDetailsViewMode": "grid",
+        "bluetoothDetailsViewMode": "list",
         "bluetoothHideUnnamedDevices": false,
         "bluetoothRssiPollIntervalMs": 60000,
         "bluetoothRssiPollingEnabled": false,
         "disableDiscoverability": false,
-        "networkPanelView": "wifi",
+        "networkPanelView": "ethernet",
         "wifiDetailsViewMode": "grid"
     },
     "nightLight": {
@@ -767,7 +793,7 @@
         "useOriginalImages": false,
         "useSolidColor": false,
         "useWallhaven": false,
-        "viewMode": "recursive",
+        "viewMode": "single",
         "wallhavenApiKey": "",
         "wallhavenCategories": "111",
         "wallhavenOrder": "desc",

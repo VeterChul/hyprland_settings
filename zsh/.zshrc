@@ -26,6 +26,7 @@ alias ll='lsd -l'
 alias sshk="kitty +kitten ssh"
 
 
+[[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
 
 
 

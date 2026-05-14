@@ -1,0 +1,12 @@
+{
+  "id": "MyBind",
+  "name": "MyBind",
+  "version": "0.1.0",
+  "minNoctaliaVersion": "4.5.0",
+  "author": "Veter",
+  "license": "MIT",
+  "description": "A plugin to control system panels via IPC.",
+  "entryPoints": {
+    "main": "Main.qml"
+  }
+}
