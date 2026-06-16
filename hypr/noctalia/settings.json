@@ -102,7 +102,7 @@
                     "showVisualizer": true,
                     "textColor": "none",
                     "useFixedWidth": false,
-                    "visualizerType": "linear"
+                    "visualizerType": "mirrored"
                 },
                 {
                     "colorizeSystemIcon": "none",
@@ -355,7 +355,7 @@
                         "showBackground": true,
                         "visualizerType": "linear",
                         "width": 320,
-                        "x": 320,
+                        "x": 660,
                         "y": 880
                     },
                     {
@@ -368,8 +368,8 @@
                         "scale": 2.2624249895262016,
                         "showBackground": true,
                         "useCustomFont": true,
-                        "x": 480,
-                        "y": 180
+                        "x": 840,
+                        "y": 160
                     },
                     {
                         "hideMode": "visible",
@@ -381,7 +381,7 @@
                         "showButtons": true,
                         "showVisualizer": true,
                         "visualizerType": "linear",
-                        "x": 320,
+                        "x": 680,
                         "y": 40
                     },
                     {
@@ -392,16 +392,16 @@
                         "scale": 1.0621848854184108,
                         "showBackground": true,
                         "statType": "CPU",
-                        "x": 500,
-                        "y": 580
+                        "x": 840,
+                        "y": 520
                     },
                     {
                         "id": "Weather",
                         "roundedCorners": true,
                         "scale": 2.384032624499013,
                         "showBackground": true,
-                        "x": 320,
-                        "y": 360
+                        "x": 680,
+                        "y": 320
                     },
                     {
                         "clockColor": "none",
@@ -413,8 +413,8 @@
                         "scale": 1.018653624201614,
                         "showBackground": true,
                         "useCustomFont": true,
-                        "x": 320,
-                        "y": 180
+                        "x": 680,
+                        "y": 160
                     },
                     {
                         "clockColor": "none",
@@ -426,8 +426,8 @@
                         "scale": 1,
                         "showBackground": true,
                         "useCustomFont": false,
-                        "x": 740,
-                        "y": 180
+                        "x": 1100,
+                        "y": 160
                     }
                 ]
             }
@@ -581,7 +581,7 @@
         "bluetoothRssiPollIntervalMs": 60000,
         "bluetoothRssiPollingEnabled": false,
         "disableDiscoverability": false,
-        "networkPanelView": "ethernet",
+        "networkPanelView": "wifi",
         "wifiDetailsViewMode": "grid"
     },
     "nightLight": {
@@ -777,7 +777,7 @@
         "randomIntervalSec": 60,
         "setWallpaperOnAllMonitors": true,
         "showHiddenFiles": true,
-        "skipStartupTransition": true,
+        "skipStartupTransition": false,
         "solidColor": "#1a1a2e",
         "sortOrder": "date_desc",
         "transitionDuration": 500,
@@ -787,7 +787,6 @@
             "disc",
             "stripes",
             "wipe",
-            "pixelate",
             "honeycomb"
         ],
         "useOriginalImages": false,

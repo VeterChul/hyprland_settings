@@ -5,3 +5,5 @@
 vim.opt.number = true
 vim.opt.relativenumber = false
 vim.opt.termguicolors = true
+vim.g.root_spec = { "cwd" }
+vim.opt.spelllang = { "en", "ru" }

@@ -19,7 +19,9 @@ export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="purple"
 
 alias home='cd ~'
-alias c='clear'
+alias c='clear' 
+alias :q='exit' 
+alias q='exit' 
 alias ls='lsd'
 alias la='lsd -a'
 alias ll='lsd -l'
