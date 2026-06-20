@@ -20,3 +20,22 @@
             (setq-default inhibit-redisplay nil
                           inhibit-message nil)
             (redisplay)))
+
+;; Прозрачность фона 85% (только фон, текст непрозрачный)
+(when (functionp 'set-frame-parameter)
+  (set-frame-parameter nil 'alpha-background 85)
+  (add-to-list 'default-frame-alist '(alpha-background . 85)))
+
+;; Убираем всё лишнее: меню, панель инструментов, полосы прокрутки
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+
+;; Отключаем кнопки управления окном (закрыть, свернуть, развернуть) — они зависят от оконного менеджера,
+;; но в Emacs можно убрать заголовок окна через параметры фрейма.
+;; Добавляем в настройки фрейма отсутствие декораций:
+(add-to-list 'default-frame-alist '(undecorated . t))
+
+;; Убираем стартовый буфер *scratch* и заменяем его на пустой, чтобы не отвлекал
+(setq initial-buffer-choice nil)   ; не показывать *scratch* при старте
+;; Или можно указать конкретный буфер, например, *Messages*, но это необязательно.

@@ -1,0 +1,377 @@
+;; Включить поддержку системного буфера обмена
+(setq select-enable-clipboard t)   ; копировать в CLIPBOARD
+(setq select-enable-primary t)     ; также в PRIMARY (средняя кнопка мыши)
+
+;; Привязка Ctrl+Shift+C для копирования выделенного текста
+(global-set-key (kbd "C-S-c") 'copy-region-as-kill)
+
+;; Привязка Ctrl+Shift+V для вставки из системного буфера
+(global-set-key (kbd "C-S-v") 'yank)
+
+;; Настройка менеджера пакетов
+(require 'package)
+(setq package-archives '(("gnu"   . "https://elpa.gnu.org/packages/")
+                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+                         ("melpa" . "https://melpa.org/packages/")))  ; <- http вместо httpsjj
+;;(setq package-archives '(("gnu"   . "https://elpa.gnu.org/packages/")
+;;                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+;;                         ("melpa" . "https://melpa.org/packages/")))
+(package-initialize)
+
+;; Установка use-package, если его ещё нет
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+;; Загрузка use-package и настройка автоматической установки пакетов
+(require 'use-package)
+(setq use-package-always-ensure t)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(all-the-icons all-the-icons-dired consult dired-subtree
+		   dracula-theme hydra nerd-icons projectile quelpa
+		   vterm)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+
+(require 'hydra)
+
+;; Терминал
+(use-package vterm
+  :ensure t)
+
+;; ;; Управление проектами
+(use-package projectile
+  :ensure t
+  :config
+  (projectile-mode +1))
+
+;; ;; Поиск файлов и буферов
+(use-package consult
+  :ensure t)
+
+;; Vertico — улучшенный интерфейс для выбора
+(use-package vertico
+  :ensure t
+  :init
+  (vertico-mode 1))
+
+;; Marginalia — добавляет аннотации к кандидатам (красиво)
+(use-package marginalia
+  :ensure t
+  :init
+  (marginalia-mode 1))
+
+(use-package quelpa
+  :ensure t
+  :config
+  (setq quelpa-update-melpa-p t))   ; обновлять MELPA перед сборкой
+
+(use-package buffer-move
+  :ensure t)
+
+(use-package evil
+  :ensure t
+  :init
+  (setq evil-want-keybinding nil)   ; не переопределять глобальные бинды
+  (setq evil-want-C-u-scroll t)     ; C-u в нормальном режиме скроллит вверх (как в Vim)
+  (setq evil-want-C-i-jump t)       ; C-i для перехода к следующей позиции (как в Vim)
+  :config
+  ;; Включаем Evil только в режимах, предназначенных для редактирования кода и текста
+  (add-hook 'prog-mode-hook 'evil-local-mode)
+  (add-hook 'text-mode-hook 'evil-local-mode)
+  )
+
+
+(setq global-map (make-sparse-keymap))
+
+;; Базовые команды, которые должны остаться:
+(global-set-key (kbd "C-x C-c") 'save-buffers-kill-emacs)   ; выход
+(global-set-key (kbd "C-x C-s") 'save-buffer)               ; сохранить файл
+(global-set-key (kbd "C-x C-f") 'find-file)                 ; открыть файл
+(global-set-key (kbd "C-x b")   'switch-to-buffer)          ; переключить буфер
+(global-set-key (kbd "C-x o")   'other-window)              ; переключить окно
+
+;; Ваши пользовательские бинды (повторяем их здесь для надёжности)
+(global-set-key (kbd "C-<return>") 'vterm)
+(global-set-key (kbd "C-d") 'find-file)
+(global-set-key (kbd "C-o") 'consult-find)
+(global-set-key (kbd "C-s") 'save-buffer)
+(global-set-key (kbd "C-b") 'consult-buffer)
+(global-set-key (kbd "C-q") 'save-buffers-kill-emacs)       ; альтернативный выход
+
+(global-set-key (kbd "C-k") (make-sparse-keymap))  ; делаем C-k префиксом
+(global-set-key (kbd "C-k o") 'projectile-switch-project)
+
+(defun my/save-and-kill-selected-buffer ()
+  "Выбрать буфер, сохранить (если изменён) и закрыть его."
+  (interactive)
+  (let* ((buf (consult-buffer))   ; выбираем буфер через consult
+         (buf (if (listp buf) (car buf) buf))) ; consult-buffer может вернуть список
+    (when (bufferp buf)
+      (with-current-buffer buf
+        (when (buffer-modified-p)
+          (save-buffer)))
+      (kill-buffer buf))))
+
+(defun my/save-and-close-buffer ()
+  "Сохранить или нет, затем закрыть буфер."
+  (interactive)
+  (when (and (buffer-modified-p)
+             (y-or-n-p "Save buffer? "))
+    (save-buffer))
+  (kill-buffer))
+
+(global-set-key (kbd "C-w") 'my/save-and-close-buffer)
+
+;; Привязываем к C-S-w
+(global-set-key (kbd "C-S-w") 'my/save-and-kill-selected-buffer)
+
+;; Навигация по окнам
+(global-set-key (kbd "C-h") 'windmove-left)
+(global-set-key (kbd "C-l") 'windmove-right)
+(global-set-key (kbd "C-j") 'windmove-down)
+(global-set-key (kbd "C-k") 'windmove-up)
+
+;; Глобальные привязки (работают в любом режиме)
+(global-set-key (kbd "C-S-h") 'buf-move-left)
+(global-set-key (kbd "C-S-l") 'buf-move-right)
+(global-set-key (kbd "C-S-j") 'buf-move-down)
+(global-set-key (kbd "C-S-k") 'buf-move-up)
+
+;; Копирование/вставка
+(global-set-key (kbd "C-S-c") 'copy-region-as-kill)
+(global-set-key (kbd "C-S-v") 'yank)
+
+(defvar my/vertico-insert-mode nil
+  "Если t, то hjkl вводят буквы, иначе навигация.")
+
+(defun my/vertico-toggle-insert ()
+  "Переключить режим ввода в минибуфере."
+  (interactive)
+  (setq my/vertico-insert-mode (not my/vertico-insert-mode))
+  (message (if my/vertico-insert-mode "Ввод" "Навигация")))
+
+(defun my/vertico-handle-h ()
+  (interactive)
+  (if my/vertico-insert-mode
+      (insert "h")
+    (vertico-first)))
+
+(defun my/vertico-handle-j ()
+  (interactive)
+  (if my/vertico-insert-mode
+      (insert "j")
+    (vertico-next)))
+
+(defun my/vertico-handle-k ()
+  (interactive)
+  (if my/vertico-insert-mode
+      (insert "k")
+    (vertico-previous)))
+
+(defun my/vertico-handle-l ()
+  (interactive)
+  (if my/vertico-insert-mode
+      (insert "l")
+    (vertico-exit)))
+
+;; Привязываем в vertico-map
+(define-key vertico-map (kbd "h") 'my/vertico-handle-h)
+(define-key vertico-map (kbd "j") 'my/vertico-handle-j)
+(define-key vertico-map (kbd "k") 'my/vertico-handle-k)
+(define-key vertico-map (kbd "l") 'my/vertico-handle-l)
+(define-key vertico-map (kbd "i") 'my/vertico-toggle-insert)
+(define-key vertico-map (kbd "ESC") (lambda () (interactive) (setq my/vertico-insert-mode nil) (message "Навигация")))
+
+
+;; (define-key vertico-map (kbd "C-j") 'vertico-next)
+;; (define-key vertico-map (kbd "C-k") 'vertico-previous)
+;; (define-key vertico-map (kbd "C-l") 'vertico-exit)   ; подтвердить выбор
+;; (define-key vertico-map (kbd "C-h") 'vertico-first)  ; можно перейти в начало (опционально)
+
+;; Задаём шаг изменения размера (можно менять в одном месте)
+(defvar my/resize-step 5
+  "Количество строк/колонок для изменения размера окна.")
+
+;; Вспомогательные функции, использующие общий шаг
+(defun my/enlarge-window-h ()
+  (interactive) (enlarge-window-horizontally my/resize-step))
+(defun my/shrink-window-h ()
+  (interactive) (shrink-window-horizontally my/resize-step))
+(defun my/enlarge-window-v ()
+  (interactive) (enlarge-window my/resize-step))
+(defun my/shrink-window-v ()
+  (interactive) (shrink-window my/resize-step))
+
+(defhydra hydra-window-resize (:color red :hint nil)
+  "
+^Resize Window^
+---------------------------------------------
+_h_: уменьшить ширину    _l_: увеличить ширину
+_j_: увеличить высоту    _k_: уменьшить высоту
+_SPC_: сбросить размер   _q_: выйти
+"
+  ("h" my/shrink-window-h)
+  ("l" my/enlarge-window-h)
+  ("j" my/enlarge-window-v)
+  ("k" my/shrink-window-v)
+  ("SPC" (lambda () (interactive) (balance-windows) (hydra-window-resize/body)))
+  ("q" nil "quit" :color blue))
+
+;; Привязываем к удобной комбинации (по умолчанию C-w r)
+(global-set-key (kbd "C-S-SPC") 'hydra-window-resize/body)
+
+
+; ============================================================
+;; dired-sidebar — стабильная боковая панель с деревом проекта
+;; ============================================================
+
+(defun my-dired-sidebar-open ()
+  "Открыть файл или раскрыть/свернуть папку внутри буфера."
+  (interactive)
+  (let ((file (dired-get-filename nil t)))
+    (if (and file (file-directory-p file))
+        (dired-subtree-toggle)     ; раскрыть/свернуть поддерево
+      (dired-find-file))))         ; открыть файл для редактирования
+
+(use-package dired-subtree
+  :ensure t)
+
+(use-package all-the-icons
+  :ensure t)
+
+;; (use-package nerd-icons
+;;   :ensure t
+;;   :config
+;;   (require 'nerd-icons))   ; принудительная загрузка
+;; 
+;;   ;; Устанавливаем шрифты (выполните один раз)
+;;   ;; (nerd-icons-install-fonts)
+  
+
+(use-package dired-sidebar
+  :ensure t
+  :after (projectile evil all-the-icons)
+  :config
+  (setq dired-sidebar-use-projectile t)
+  (setq dired-sidebar-use-one-instance t)
+  (setq dired-sidebar-refresh-on-project-switch t)
+  (setq dired-sidebar-width 35)
+  (setq dired-sidebar-theme 'icons)
+  ;; (setq dired-sidebar-icon-set 'nerd-icons)   ; <-- ключевая строка
+  (setq dired-sidebar-display-alist '((side . left) (slot . 0)))
+ 
+  (set-face-attribute 'dired-directory nil :foreground "DodgerBlue" :weight 'bold)
+  (set-face-attribute 'dired-ignored nil :foreground "gray40")
+ 
+  ;; Включаем режим дерева
+  (setq dired-sidebar-subtree-mode t)
+
+  ;; Принудительно активируем dired-subtree-mode в буфере панели
+  (add-hook 'dired-sidebar-mode-hook
+            (lambda ()
+              (dired-subtree-mode 1)
+              (setq-local dired-subtree-use-mouse nil))) ; опционально
+
+  ;; Привязки
+  :bind (:map dired-sidebar-mode-map
+         ("j" . dired-next-line)
+         ("k" . dired-previous-line)
+         ("l" . my-dired-sidebar-open)            ; будет раскрывать папки, если включён subtree
+         ("h" . my-dired-sidebar-open)
+         ("TAB" . dired-subtree-toggle)     ; раскрыть/свернуть поддерево
+         ("a" . dired-create-directory)
+         ("+" . dired-create-directory)
+         ("D" . dired-flag-file-deletion)
+         ("x" . dired-do-flagged-delete)
+         ("R" . dired-do-rename)
+         ("C" . dired-do-copy)
+         ("g" . dired-revert)
+         ("?" . dired-summary)))
+
+
+
+(global-set-key (kbd "C-e") 'dired-sidebar-toggle-sidebar)
+
+(with-eval-after-load 'dired-sidebar
+  (set-face-attribute 'dired-sidebar-directory nil :foreground "DodgerBlue" :weight 'bold)
+  (set-face-attribute 'dired-sidebar-ignored nil :foreground "gray40"))
+
+(defun my/open-sidebar-after-project ()
+  "Открыть dired-sidebar с корнем нового проекта."
+  (message "Hook triggered!")   ; <-- добавили
+  (let ((root (projectile-project-root)))
+    (when root
+      (when (get-buffer "*dired-sidebar*")
+        (kill-buffer "*dired-sidebar*"))
+      (dired-sidebar-get-sidebar-buffer root)
+      (dired-sidebar-show-sidebar))))
+
+;; Функция для стартового выбора проекта
+(defun my/startup-select-project ()
+  "Открыть список известных проектов и переключиться на выбранный."
+  (interactive)
+  (if (projectile-known-projects)
+      (projectile-switch-project-by-name (completing-read "Select project: " (projectile-known-projects)))
+    (message "No known projects yet. Open some project first."))
+
+   (run-with-idle-timer 0.1 nil #'my/open-sidebar-after-project))
+  (message "No known projects yet. Open some project first."  
+
+  )
+
+;; Вызываем эту функцию при старте (после загрузки всех пакетов)
+(add-hook 'after-init-hook #'my/startup-select-project)
+
+
+(define-key evil-visual-state-map (kbd "C-h") 'windmove-left)
+  (define-key evil-visual-state-map (kbd "C-l") 'windmove-right)
+  (define-key evil-visual-state-map (kbd "C-j") 'windmove-down)
+  (define-key evil-visual-state-map (kbd "C-k") 'windmove-up)
+
+(defun my/open-sidebar-after-project ()
+  (let ((root (projectile-project-root)))
+    (when root
+      (dired-sidebar-get-sidebar-buffer root)
+      (dired-sidebar-show-sidebar))))
+
+(add-hook 'projectile-after-switch-project-hook #'my/open-sidebar-after-project)
+
+(with-eval-after-load 'evil
+  (define-key evil-normal-state-map (kbd "C-e") 'dired-sidebar-toggle-sidebar)
+  (define-key evil-visual-state-map (kbd "C-e") 'dired-sidebar-toggle-sidebar)
+  (define-key evil-normal-state-map (kbd "C-h") 'windmove-left)
+  (define-key evil-normal-state-map (kbd "C-l") 'windmove-right)
+  (define-key evil-normal-state-map (kbd "C-j") 'windmove-down)
+  (define-key evil-normal-state-map (kbd "C-k") 'windmove-up)
+  (define-key evil-visual-state-map (kbd "C-h") 'windmove-left)
+  (define-key evil-visual-state-map (kbd "C-l") 'windmove-right)
+  (define-key evil-visual-state-map (kbd "C-j") 'windmove-down)
+  (define-key evil-visual-state-map (kbd "C-k") 'windmove-up)
+  (define-key evil-normal-state-map (kbd "C-S-h") 'buf-move-left)
+  (define-key evil-normal-state-map (kbd "C-S-l") 'buf-move-right)
+  (define-key evil-normal-state-map (kbd "C-S-j") 'buf-move-down)
+  (define-key evil-normal-state-map (kbd "C-S-k") 'buf-move-up)
+)
+
+;; Полностью отключаем стартовый экран
+(setq inhibit-startup-screen t)
+(setq initial-buffer-choice nil)
+(setq inhibit-startup-message t)
+
+;; Убиваем буфер *GNU Emacs*, если он появился
+(add-hook 'window-setup-hook
+          (lambda ()
+            (when (get-buffer "*GNU Emacs*")
+              (kill-buffer "*GNU Emacs*"))))

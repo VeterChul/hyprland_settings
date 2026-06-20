@@ -1,0 +1,1 @@
+("~/.myconfig/" "/opt/VeterDM/" "~/Program/download_music/")

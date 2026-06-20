@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/veter/.emacs.d/elpa/vterm-20260528.1919/build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
