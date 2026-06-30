@@ -339,6 +339,3 @@ else
   precmd_functions+=(update_top_line)
   update_top_line
 fi
-
-
-

@@ -34,13 +34,14 @@
  '(package-selected-packages
    '(all-the-icons all-the-icons-dired consult dired-subtree
 		   dracula-theme hydra nerd-icons projectile quelpa
-		   vterm)))
+		   tetris-60 vterm)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(mode-line ((t (:foreground "#FF00FF" :background "#222" :box (:line-width 2 :color "#FF00FF")))))
+ '(mode-line-inactive ((t (:foreground "#4B00BB" :background "#111" :box (:line-width 1 :color "#4B00BB"))))))
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
@@ -91,9 +92,9 @@
   ;; Включаем Evil только в режимах, предназначенных для редактирования кода и текста
   (add-hook 'prog-mode-hook 'evil-local-mode)
   (add-hook 'text-mode-hook 'evil-local-mode)
+  (add-hook 'markdown-mode-hook 'evil-local-mode)
+  (add-hook 'conf-mode-hook 'evil-local-mode)
   )
-
-
 
 (setq global-map (make-sparse-keymap))
 
@@ -107,6 +108,55 @@
 ;; Ваши пользовательские бинды (повторяем их здесь для надёжности)
 (global-set-key (kbd "C-s") 'save-buffer)
 (global-set-key (kbd "C-b") 'consult-buffer)
+(global-set-key (kbd "C-S-n") 'projectile-switch-project)
+(global-set-key (kbd "C-S-p") 'projectile-add-known-project)
+
+(setq display-line-numbers-type 'relative)   ; относительные номера
+
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+(add-hook 'text-mode-hook 'display-line-numbers-mode)
+(add-hook 'markdown-mode-hook 'display-line-numbers-mode)
+(add-hook 'conf-mode-hook 'display-line-numbers-mode)
+
+(defun my/load-kitty-theme ()
+  "Отключить все темы и загрузить my-kitty."
+  (interactive)
+  (mapc #'disable-theme custom-enabled-themes)   ; отключаем все активные темы
+  (load-theme 'my-kitty t)
+  (message "Тема my-kitty загружена"))
+
+
+(defhydra my/settings-hydra (:color red :hint nil)
+  "
+^Настройки^
+------------------------------------------------------
+[_n_] Номера строк (toggle)      [_t_] Тема (следующая)
+[_r_] Относительные/абсолютные   [_T_] Тема my-kitty
+[_f_] Размер шрифта +            [_s_] Размер шрифта -
+[_h_] Справка                    [_q_] Выйти
+[_p_] Авто-PDF для TeX (toggle)
+"
+  ("n" (progn
+         (global-display-line-numbers-mode 'toggle)
+         (message "Номера строк: %s" (if global-display-line-numbers-mode "вкл" "выкл"))))
+  ("r" (progn
+       (setq-local display-line-numbers-type (if (eq display-line-numbers-type 'relative) 'absolute 'relative))
+       (display-line-numbers-mode -1)
+       (display-line-numbers-mode 1)
+       (message "Режим номеров в текущем буфере: %s" (if (eq display-line-numbers-type 'relative) "относительные" "абсолютные"))))
+  ("t" (progn
+         (load-theme (car (cdr (member (car custom-enabled-themes) (custom-available-themes)))) t)
+         (message "Тема изменена")))
+  ("T" (my/load-kitty-theme))
+  ("f" (text-scale-increase 1))
+  ("s" (text-scale-decrease 1))
+  ("h" (describe-function 'display-line-numbers-mode))
+   ("p" (progn
+         (setq my/auto-open-pdf-for-tex (not my/auto-open-pdf-for-tex))
+         (message "Авто-открытие PDF для TeX: %s" (if my/auto-open-pdf-for-tex "включено" "выключено"))))
+  ("q" nil "выйти" :color blue))
+
+(global-set-key (kbd "C-c s") 'my/settings-hydra/body)
 
 (defun my/vterm-other-window-vertically ()
   (interactive)
@@ -168,12 +218,18 @@
 (global-set-key (kbd "C-S-d") 'my/find-file-in-new-window-horizontally) ; горизонтальный сплит (Shift+D)
 
 (defun my/save-and-close-buffer ()
-  "Сохранить буфер (если изменён) и закрыть окно с этим буфером."
+  "Сохранить буфер (если изменён), убить его и закрыть окно.
+Если окно было единственным, закрыть фрейм."
   (interactive)
   (when (and (buffer-modified-p)
              (y-or-n-p "Save buffer? "))
     (save-buffer))
-  (quit-window t))   ; t означает: убить буфер и закрыть окно
+  (let ((buf (current-buffer)))
+    (kill-buffer buf)          ; убить буфер
+    (if (one-window-p)
+        (delete-frame)         ; если окно одно, закрыть фрейм
+      (delete-window))))       ; иначе закрыть окно, соседние расширятся
+
 
 (defun my/save-and-kill-selected-buffer ()
   "Выбрать буфер, сохранить (если изменён) и закрыть его."
@@ -188,9 +244,8 @@
 
 
 (global-set-key (kbd "C-q") 'my/save-and-close-buffer)
+(global-set-key (kbd "C-S-q") 'kill-buffer)
 
-;; Привязываем к C-S-w
-(global-set-key (kbd "C-S-q") 'my/save-and-kill-selected-buffer)
 
 ;; Навигация по окнам
 (global-set-key (kbd "C-h") 'windmove-left)
@@ -245,6 +300,12 @@
       (insert "l")
     (vertico-exit)))
 
+(defun my/vertico-handle-esc ()
+  (interactive)
+  (if my/vertico-insert-mode
+      (abort-recursive-edit)
+    (setq my/vertico-insert-mode nil)))
+
 ;; Привязываем в vertico-map
 (define-key vertico-map (kbd "h") 'my/vertico-handle-h)
 (define-key vertico-map (kbd "j") 'my/vertico-handle-j)
@@ -254,12 +315,8 @@
 (define-key vertico-map (kbd "ESC") (lambda () (interactive) (setq my/vertico-insert-mode nil) (message "Навигация")))
 
 ;; Настройка цветов строки состояния для окон
-(custom-set-faces
- '(mode-line ((t (:foreground "#FF00FF" :background "#222" :box (:line-width 2 :color "#FF00FF")))))
- '(mode-line-inactive ((t (:foreground "#4B00BB" :background "#111" :box (:line-width 1 :color "#4B00BB"))))))
-(custom-set-faces
- '(mode-line ((t (:box (:line-width 2 :color "#FF00FF")))))
- '(mode-line-inactive ((t (:box (:line-width 1 :color "#4B00BB"))))))
+
+
 
 
 (defvar my/resize-step 5
@@ -300,13 +357,54 @@ _SPC_: сбросить размер   _q_: выйти
 (use-package all-the-icons
   :ensure t)
 
+;; ============================================================
+;; Умное открытие файлов из dired-sidebar
+;; ============================================================
+
+(defun my/find-other-editing-window ()
+  "Найти окно, которое не является деревом или специальным буфером."
+  (let ((windows (window-list))
+        (candidate nil))
+    (dolist (win windows)
+      (with-current-buffer (window-buffer win)
+        (when (and (not (eq major-mode 'dired-sidebar-mode))
+                   (not (eq major-mode 'vterm-mode))
+                   (not (string-match-p "^\\*" (buffer-name))))
+          (setq candidate win))))
+    (or candidate (selected-window))))
+
+(defun my/open-file-in-smart-window (file)
+  "Открыть FILE в новом сплите, но не в окне дерева."
+  (let ((windows (window-list))
+        (target-win nil))
+    ;; Ищем окно, не являющееся деревом
+    (dolist (win windows)
+      (with-current-buffer (window-buffer win)
+        (when (not (eq major-mode 'dired-sidebar-mode))
+          (setq target-win win))))
+    (if target-win
+        ;; Есть окно не-дерево — создаём сплит в нём
+        (progn
+          (select-window target-win)
+          (if (> (window-body-width target-win) (window-body-height target-win))
+              (split-window-right)
+            (split-window-below))
+          (other-window 1)
+          (find-file file))
+      ;; Нет окна не-дерево — создаём сплит в текущем окне (дереве)
+      (if (> (window-body-width) (window-body-height))
+          (split-window-right)
+        (split-window-below))
+      (other-window 1)
+      (find-file file))))
+
 (defun my-dired-sidebar-open ()
-  "Открыть файл в другом окне или раскрыть/свернуть папку внутри буфера."
+  "Открыть файл в умном окне или раскрыть/свернуть папку."
   (interactive)
   (let ((file (dired-get-filename nil t)))
     (if (and file (file-directory-p file))
-        (dired-subtree-toggle)     ; раскрыть/свернуть поддерево
-      (my/find-file-in-new-window-vertically))))  ; открыть файл в другом окне
+        (dired-subtree-toggle)
+      (my/open-file-in-smart-window file))))
 
 
 (use-package dired-sidebar
@@ -382,30 +480,6 @@ _SPC_: сбросить размер   _q_: выйти
 (define-key evil-visual-state-map (kbd "C-j") 'windmove-down)
 (define-key evil-visual-state-map (kbd "C-k") 'windmove-up)
 
-(with-eval-after-load 'evil
-  ;; Удаляем привязку C-w из всех основных карт
-  (evil-define-key 'normal 'global (kbd "C-q") nil)
-  (evil-define-key 'visual 'global (kbd "C-q") nil)
-  (evil-define-key 'insert 'global (kbd "C-q") nil)
-
-  ;; Явно удаляем из прямых карт состояний
-  (define-key evil-normal-state-map (kbd "C-q") nil)
-  (define-key evil-visual-state-map (kbd "C-q") nil)
-  (define-key evil-insert-state-map (kbd "C-q") nil)
-
-  ;; !!! КЛЮЧЕВОЕ: удаляем из префиксной карты окон !!!
-  (define-key evil-window-map (kbd "C-q") nil)   ; <-- добавляем это
-
-  ;; Для надёжности также можно очистить все привязки в evil-window-map
-  ;; но достаточно удалить сам C-w как префикс.
-
-  ;; Отвязываем все остальные Ctrl-комбинации (у вас уже есть)
-  (dolist (key '("C-a" "C-e" "C-y" "C-u" "C-d" "C-f" "C-b" "C-h"
-                 "C-j" "C-k" "C-l" "C-o" "C-i" "C-r" "C-v"
-                 "C-n" "C-p" "C-s" "C-t"))
-    (evil-define-key 'normal 'global (kbd key) nil)
-    (evil-define-key 'visual 'global (kbd key) nil)
-    (evil-define-key 'insert 'global (kbd key) nil)))
 
 (with-eval-after-load 'evil
   ;; ------------------------------------------------------------
@@ -427,10 +501,10 @@ _SPC_: сбросить размер   _q_: выйти
     (kbd "C-r") 'isearch-backward
     (kbd "C-s") 'save-buffer
     (kbd "C-t") 'vterm
-    (kbd "C-v") 'scroll-down-command
     (kbd "C-n") 'next-line
     (kbd "C-p") 'previous-line
     (kbd "C-q") 'my/save-and-close-buffer
+    (kbd "C-S-q") 'kill-buffer
     (kbd "C-S-d") 'my/find-file-in-new-window-horizontally
     (kbd "C-S-h") 'buf-move-left
     (kbd "C-S-l") 'buf-move-right
@@ -442,7 +516,6 @@ _SPC_: сбросить размер   _q_: выйти
     (kbd "C-e") 'dired-sidebar-toggle-sidebar
     (kbd "C-<return>") 'vterm
     (kbd "C-S-t") (lambda () (interactive) (my/enable-tab-bar-if-needed) (tab-bar-new-tab))
-    (kbd "C-S-q") (lambda () (interactive) (when my/tab-bar-enabled (tab-bar-close-tab)))
     (kbd "C-0") (lambda () (interactive) (tab-bar-select-tab 10))
     (kbd "C-1") (lambda () (interactive) (tab-bar-select-tab 1))
     (kbd "C-2") (lambda () (interactive) (tab-bar-select-tab 2))
@@ -471,7 +544,6 @@ _SPC_: сбросить размер   _q_: выйти
     (kbd "C-r") 'isearch-backward
     (kbd "C-s") 'save-buffer
     (kbd "C-t") 'vterm
-    (kbd "C-v") 'scroll-down-command
     (kbd "C-n") 'next-line
     (kbd "C-p") 'previous-line
     (kbd "C-q") 'my/save-and-close-buffer
@@ -535,12 +607,12 @@ _SPC_: сбросить размер   _q_: выйти
   (my/enable-tab-bar-if-needed)
   (tab-bar-select-tab tab-index))
 
-;; Создание новой вкладки (C-S-t)
 (global-set-key (kbd "C-S-t")
                 (lambda ()
                   (interactive)
-                  (my/enable-tab-bar-if-needed)
-                  (tab-bar-new-tab)))
+                  (my/enable-tab-bar-if-needed)   ; включаем вкладки (если ещё не включены)
+                  (tab-bar-new-tab)               ; создаём новую вкладку
+                  (my/startup-select-project)))   ; запускаем выбор проекта
 
 ;; Закрытие вкладки (C-S-q) – работает только если вкладки уже включены
 (global-set-key (kbd "C-S-q")
@@ -571,3 +643,191 @@ _SPC_: сбросить размер   _q_: выйти
             (when (get-buffer "*GNU Emacs*")
               (kill-buffer "*GNU Emacs*"))))
 
+;; ============================================================
+;; Универсальный запуск по F5 с поддержкой языков
+;; ============================================================
+
+(defvar my/run-file-handlers
+  `(("py" . ,(lambda (file root)
+               (if root
+                   (format "cd %s && python3 %s" root file)
+                 (format "python3 %s" file))))
+    ("tex" . ,(lambda (file root)
+                (let ((basename (file-name-base file)))
+                  (if root
+                      (format "~/.local/share/latex/latex-mirror-build.sh %s %s"
+                              (shell-quote-argument root)
+                              (shell-quote-argument file))
+                    (format "~/.local/share/latex/latex-mirror-build.sh . %s"
+                            (shell-quote-argument file))))))
+    ("c" . ,(lambda (file root)
+              (format "gcc -Wall -g %s -o %s" file (file-name-sans-extension file))))
+    ("cpp" . ,(lambda (file root)
+                (format "g++ -Wall -g %s -o %s" file (file-name-sans-extension file))))
+    ("sh" . ,(lambda (file root)
+               (format "bash %s" file)))
+    ("go" . ,(lambda (file root)
+               (if root
+                   (format "cd %s && go run %s" root file)
+                 (format "go run %s" file))))
+    ("rs" . ,(lambda (file root)
+               (if root
+                   (format "cd %s && cargo run" root)
+                 (format "rustc %s && ./%s" file (file-name-sans-extension file)))))
+    ;; Добавляйте свои расширения по тому же принципу
+    )
+  "Alist mapping file extensions to functions that return a compile command.
+The function receives two arguments: the full path to the file (as a string)
+and the project root (or nil if not in a project).")
+
+(defun my/compile-in-new-window (command)
+  "Запустить compile в новом окне, не затрагивая другие окна."
+  (let* ((orig-window (selected-window))
+         (orig-buffer (current-buffer))
+         (new-window (split-window orig-window nil 'below))
+         (other-windows (remove new-window (window-list))))
+    ;; Запоминаем исходные буферы для всех окон, кроме нового
+    (let ((orig-buffers (mapcar (lambda (w) (cons w (window-buffer w))) other-windows)))
+      ;; Переключаемся в новое окно
+      (select-window new-window)
+      ;; Запускаем compile
+      (compile command)
+      ;; После запуска: возвращаем исходные буферы в другие окна
+      (dolist (item orig-buffers)
+        (let ((win (car item))
+              (buf (cdr item)))
+          (when (buffer-live-p buf)
+            (set-window-buffer win buf))))
+      ;; В новом окне гарантируем показ *compilation*
+      (let ((comp-buf (get-buffer "*compilation*")))
+        (when comp-buf
+          (set-window-buffer new-window comp-buf)))
+      ;; Возвращаем фокус в исходное окно
+      ;; (select-window orig-window)
+      )))
+
+(defun my/run-file ()
+  "Запустить текущий файл, используя обработчик из `my/run-file-handlers`.
+Если обработчик не найден, предложить стандартный `compile`."
+  (interactive)
+  (let ((file (buffer-file-name)))
+    (if (not file)
+        (message "Нет файла для запуска!")
+      (let* ((ext (file-name-extension file))
+             (project-root (projectile-project-root))
+             (handler (cdr (assoc ext my/run-file-handlers))))
+        (if handler
+            (let ((command (funcall handler file project-root)))
+              (if (get-buffer-window "*compilation*" t)
+                  (progn
+                    (select-window (get-buffer-window "*compilation*" t))
+                    (compile command)
+                    (select-window (previous-window)))
+                (my/compile-in-new-window command)))
+          (call-interactively 'compile))))))
+
+;; Привязываем F5
+(global-set-key (kbd "<f5>") 'my/run-file)
+
+;; ============================================================
+;; Автоматическое открытие PDF для TeX-файлов
+;; ============================================================
+
+(defvar my/auto-open-pdf-for-tex t
+  "If non-nil, automatically open PDF when visiting a TeX file.")
+
+(defun my/open-pdf-for-tex ()
+  "Открыть PDF рядом с TeX-файлом, если `my/auto-open-pdf-for-tex` не nil."
+  (when (and my/auto-open-pdf-for-tex
+             buffer-file-name
+             (string-match "\\.tex\\'" buffer-file-name))
+    (let* ((tex-buffer (current-buffer))
+           (tex-win (get-buffer-window tex-buffer))
+           (root (projectile-project-root))
+           (pdf-file (when root
+                       (expand-file-name
+                        (concat "pdf/"
+                                (file-relative-name (file-name-sans-extension buffer-file-name) root)
+                                ".pdf")
+                        root))))
+      (unless tex-win
+        (switch-to-buffer tex-buffer)
+        (setq tex-win (selected-window)))
+      (when (and pdf-file (file-exists-p pdf-file))
+        (select-window tex-win)
+        (if (> (window-body-width tex-win) (window-body-height tex-win))
+            (split-window-right)
+          (split-window-below))
+        (other-window 1)
+        (find-file pdf-file)
+        (select-window tex-win)))))
+
+
+
+;; Подключаем хуки
+(add-hook 'latex-mode-hook 'my/open-pdf-for-tex)
+;; (add-hook 'tex-mode-hook 'my/open-pdf-for-tex)
+
+;; ============================================================
+;; Игры (Тетрис и Пинг-понг)
+;; ============================================================
+
+(defun my/open-game-in-popup (game-function)
+  "Открыть игру GAME-FUNCTION в новом плавающем фрейме поверх остальных окон."
+  (let ((frame (make-frame '((width . 80)
+                             (height . 40)
+                             (top . 100)
+                             (left . 200)
+                             (undecorated . t)
+                             (name . "Emacs Game")))))
+    (select-frame-set-input-focus frame)   ; активируем и поднимаем фрейм
+    (funcall game-function)))
+
+
+(defun my/open-game-in-split (game-function)
+  "Открыть игру GAME-FUNCTION в новом окне (сплите)."
+  (if (> (window-body-width) (window-body-height))
+      (split-window-right)
+    (split-window-below))
+  (other-window 1)
+  (funcall game-function))
+
+(defun my/tetris (&optional arg)
+  "Открыть Тетрис. С префиксом C-u открыть в сплите, иначе в плавающем фрейме."
+  (interactive "P")
+  (if arg
+      (my/open-game-in-popup 'tetris)
+    (my/open-game-in-split 'tetris)))
+
+(defun my/pong (&optional arg)
+  "Открыть Пинг-понг. С префиксом C-u открыть в сплите, иначе в плавающем фрейме."
+  (interactive "P")
+  (if arg
+      (my/open-game-in-popup 'pong)
+    (my/open-game-in-split 'pong)))
+
+;; Привязываем клавиши
+(global-set-key (kbd "C-c t") 'my/tetris)
+(global-set-key (kbd "C-c p") 'my/pong)
+
+;; ============================================================
+;; Автоматическое обновление буферов после компиляции
+;; ============================================================
+
+(defun my/revert-all-buffers ()
+  "Перезагрузить все буферы, у которых файл изменился на диске."
+  (interactive)
+  (dolist (buf (buffer-list))
+    (when (and (buffer-file-name buf)
+               (not (buffer-modified-p buf))
+               (file-exists-p (buffer-file-name buf))
+               (not (verify-visited-file-modtime buf)))
+      (with-current-buffer buf
+        (revert-buffer t t nil)))))
+
+(defun my/on-compilation-finish (buf msg)
+  "Вызвать my/revert-all-buffers после успешной компиляции."
+  (when (string-match "finished" msg)
+    (my/revert-all-buffers)))
+
+(add-hook 'compilation-finish-functions #'my/on-compilation-finish)

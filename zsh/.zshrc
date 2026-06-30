@@ -25,6 +25,7 @@ alias q='exit'
 alias ls='lsd'
 alias la='lsd -a'
 alias ll='lsd -l'
+alias lsdn='lsd -la --blocks name'
 alias sshk="kitty +kitten ssh"
 
 

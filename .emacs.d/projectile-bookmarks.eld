@@ -1,1 +1,1 @@
-("~/.myconfig/" "/opt/VeterDM/" "~/Program/download_music/")
+("~/.myconfig/" "~/Документы/АП 2026/" "~/Program/" "~/.local/share/latex/" "~/Program/learning_C/" "/opt/VeterDM/" "~/Program/download_music/")
