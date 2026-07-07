@@ -47,6 +47,13 @@
 
 (require 'hydra)
 
+(use-package yaml-mode
+  :ensure t
+  :hook (yaml-mode . evil-local-mode))
+
+(use-package dockerfile-mode
+  :ensure t
+  :hook (dockerfile-mode . evil-local-mode))
 
 ;; Терминал
 (use-package vterm
@@ -94,6 +101,8 @@
   (add-hook 'text-mode-hook 'evil-local-mode)
   (add-hook 'markdown-mode-hook 'evil-local-mode)
   (add-hook 'conf-mode-hook 'evil-local-mode)
+  (add-hook 'yaml-mode-hook 'evil-local-mode)
+  (add-hook 'dockerfile-mode-hook 'evil-local-mode)
   )
 
 (setq global-map (make-sparse-keymap))
@@ -117,6 +126,8 @@
 (add-hook 'text-mode-hook 'display-line-numbers-mode)
 (add-hook 'markdown-mode-hook 'display-line-numbers-mode)
 (add-hook 'conf-mode-hook 'display-line-numbers-mode)
+(add-hook 'yaml-mode-hook 'display-line-numbers-mode)
+(add-hook 'dockerfile-mode-hook 'display-line-numbers-mode)
 
 (defun my/load-kitty-theme ()
   "Отключить все темы и загрузить my-kitty."
