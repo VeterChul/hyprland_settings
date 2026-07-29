@@ -32,9 +32,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(all-the-icons all-the-icons-dired consult dired-subtree
-		   dracula-theme hydra nerd-icons projectile quelpa
-		   tetris-60 vterm)))
+   '(all-the-icons-dired buffer-move company consult dired-sidebar
+			 dockerfile-mode dracula-theme evil marginalia
+			 neotree nerd-icons projectile quelpa
+			 tetris-60 treemacs vertico vterm yaml-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -325,6 +326,11 @@
 (define-key vertico-map (kbd "i") 'my/vertico-toggle-insert)
 (define-key vertico-map (kbd "ESC") (lambda () (interactive) (setq my/vertico-insert-mode nil) (message "Навигация")))
 
+;; Привязываем в vertico-map
+(define-key vertico-map (kbd "р") 'my/vertico-handle-h)
+(define-key vertico-map (kbd "о") 'my/vertico-handle-j)
+(define-key vertico-map (kbd "л") 'my/vertico-handle-k)
+(define-key vertico-map (kbd "д") 'my/vertico-handle-l)
 ;; Настройка цветов строки состояния для окон
 
 
@@ -842,3 +848,31 @@ and the project root (or nil if not in a project).")
     (my/revert-all-buffers)))
 
 (add-hook 'compilation-finish-functions #'my/on-compilation-finish)
+
+;; ============================================================
+;; Автодополнение (Company-mode)
+;; ============================================================
+;; (use-package company
+;;   :ensure t
+;;   :config
+;;   ;; Включаем Company глобально во всех буферах
+;;   (global-company-mode 1)
+;; 
+;;   ;; Настройка задержки перед появлением подсказок (в секундах)
+;;   (setq company-idle-delay 0.2)
+;; 
+;;   ;; Минимальное количество символов для запуска дополнения
+;;   (setq company-minimum-prefix-length 2)
+;; 
+;;   ;; Количество кандидатов для отображения
+;;   (setq company-tooltip-limit 15)
+;; 
+;;   ;; Показывать номера кандидатов для быстрого выбора
+;;   (setq company-show-numbers t)
+;;   
+;;   ;; Настройка навигации (C-n, C-p для выбора, <return> для подтверждения)[reference:3]
+;;   :bind (:map company-active-map
+;;          ("C-n" . company-select-next)
+;;          ("C-p" . company-select-previous)
+;;          ("<tab>" . company-complete-common-or-cycle))
+;;   )
