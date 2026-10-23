@@ -131,11 +131,12 @@ ls ~/.myconfig-backup/
 
 **Рабочий стол**
 
-![Рабочий стол](docs/screenshots/hypr/2026-01-23_20-25.png)
+![Рабочий стол](docs/screenshots/hypr/2026-10-23_22-02.png)
 
 **Zsh**
 
 ![Zsh](docs/screenshots/zsh/2026-02-19_20-26.png)
+![Рабочий стол](docs/screenshots/hypr/2026-10-23_22-03.png)
 
 ## VeterDM
 
