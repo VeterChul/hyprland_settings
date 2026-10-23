@@ -1,5 +1,6 @@
 # Weather cache
 config/waybar/modules/weather/weather_log.txt
+config/waybar/.cache/
 
 # Personal images excluded from the zsh picture pool
 home/zsh/.oh-my-zsh/themes/pic/2/photo_2025-09-28_12-10-45.jpg
