@@ -1,6 +1,37 @@
-hypr/waybar/modules/weather/weather_log.txt
-zsh/.oh-my-zsh/themes/pic/2/photo_2025-09-28_12-10-45.jpg
-zsh/.oh-my-zsh/themes/pic/2/photo_2025-09-28_12-10-45.jpg
-zsh/.oh-my-zsh/themes/pic/2/photo_2026-02-09_19-18-55.jpg
-zsh/.oh-my-zsh/themes/pic/2/photo_2026-03-26_18-38-08.jpg
-zsh/.oh-my-zsh/themes/pic/2/photo_2026-05-03_21-39-15.jpg
+# Weather cache
+config/waybar/modules/weather/weather_log.txt
+
+# Personal images excluded from the zsh picture pool
+home/zsh/.oh-my-zsh/themes/pic/2/photo_2025-09-28_12-10-45.jpg
+home/zsh/.oh-my-zsh/themes/pic/2/photo_2026-02-09_19-18-55.jpg
+home/zsh/.oh-my-zsh/themes/pic/2/photo_2026-03-26_18-38-08.jpg
+home/zsh/.oh-my-zsh/themes/pic/2/photo_2026-05-03_21-39-15.jpg
+
+# Emacs packages are restored by package.el, not versioned
+home/.emacs.d/elpa/
+
+# eDEX-UI runtime state (config lives in settings.json / shortcuts.json / themes / keyboards)
+config/eDEX-UI/Cache/
+config/eDEX-UI/Code Cache/
+config/eDEX-UI/GPUCache/
+config/eDEX-UI/Local Storage/
+config/eDEX-UI/Session Storage/
+config/eDEX-UI/blob_storage/
+config/eDEX-UI/Crash Reports/
+config/eDEX-UI/Cookies
+config/eDEX-UI/Cookies-journal
+config/eDEX-UI/Network Persistent State
+config/eDEX-UI/Preferences
+config/eDEX-UI/lastWindowState.json
+config/eDEX-UI/versions_log.json
+config/eDEX-UI/geoIPcache/
+config/eDEX-UI/geoIPcache-tmp/
+
+# Audacious runtime state (only config files and skins are versioned)
+config/audacious/playlists/
+config/audacious/lyrics/
+config/audacious/playlist-state
+config/audacious/plugin-registry
+
+# Logs
+*.log

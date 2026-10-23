@@ -1,0 +1,44 @@
+
+[audacious]
+equalizer_bands=0.96,0,0,0,-1.44,-1.44,-2.88,-1.92,-2.88,-1.92
+use_xwayland=TRUE
+
+[audgui]
+filesel_path=/home/veter/music/Дискотека АП 2026
+
+[audqt]
+icon_theme=audacious-flat-dark
+theme=dark
+
+[pipewire]
+volume_left=55
+volume_right=55
+
+[qtui]
+player_height=933
+player_width=1715
+
+[skins]
+active_titlebar_any=FALSE
+double_size=TRUE
+equalizer_visible=TRUE
+equalizer_x=277
+equalizer_y=307
+player_x=277
+player_y=75
+playlist_font=AuriolC 14
+playlist_visible=TRUE
+playlist_x=277
+playlist_y=539
+skin=/home/veter/.local/share/audacious/Skins/Hello kytti.wsz
+
+[skins-layout]
+albumart-qt=868,839,280,184
+blur_scope-qt=987,6,935,486
+eq_presets=820,462,288,192
+gl-spectrum-qt=865,40,961,988
+lyrics-qt=327,313,288,192
+playback-history-qt=816,458,288,192
+qt-spectrum=360,335,284,188
+song-info-qt=131,566,288,192
+vumeter-qt=1303,42,284,188
