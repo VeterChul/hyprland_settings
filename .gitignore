@@ -1,5 +1,6 @@
 # Weather cache
 config/waybar/modules/weather/weather_log.txt
+config/waybar/modules/weather/weather.txt
 config/waybar/.cache/
 
 # Personal images excluded from the zsh picture pool
