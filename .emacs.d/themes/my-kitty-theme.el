@@ -1,4 +1,4 @@
-;;; ~/.emacs.d/themes/my-kitty-theme.el
+;;; my-kitty-theme.el --- Тема my-kitty -*- lexical-binding: t; -*-
 (deftheme my-kitty "A custom theme based on my Kitty terminal colors.")
 
 (custom-theme-set-faces

@@ -1,5 +1,7 @@
+;;; early-init.el --- Ранняя инициализация -*- lexical-binding: t; -*-
 ;;; ~/.emacs.d/early-init.el
 ;; Загружается перед init.el, до появления окна GUI.
+
 
 ;; 1. Указываем путь к папке с кастомными темами
 ;; (чтобы Emacs смог найти my-kitty-theme)
@@ -39,3 +41,8 @@
 ;; Убираем стартовый буфер *scratch* и заменяем его на пустой, чтобы не отвлекал
 (setq initial-buffer-choice nil)   ; не показывать *scratch* при старте
 ;; Или можно указать конкретный буфер, например, *Messages*, но это необязательно.
+
+;; Не предупреждать о missing lexical-binding cookie
+(setq warning-suppress-types '((files)))
+
+(setq byte-compile-warnings '(not free-vars unresolved))

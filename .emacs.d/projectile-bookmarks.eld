@@ -1,1 +1,0 @@
-("/opt/VeterDM/" "~/.myconfig/" "~/Program/golf_server/" "~/Program/download_music/" "~/Документы/АП 2026/" "~/Program/golf_gen/" "~/.local/share/latex/" "~/Program/learning_C/")
