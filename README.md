@@ -75,6 +75,16 @@
 | Zsh | оболочка, oh-my-zsh, powerlevel10k | `home/zsh` |
 | Audacious | плеер: конфиг и скины | `config/audacious`, `local/audacious` |
 
+## Горячие клавиши
+
+Полный список — в [`config/mango/bindings.conf`](config/mango/bindings.conf).
+
+| Клавиши | Действие |
+|---|---|
+| `SUPER+S` | Переключить макет активного тега: `scroller` ↔ макет по умолчанию из `tag.conf` (grid для тегов 3-8 и 10, fair для 2 и 9) |
+
+Переключение действует до перезагрузки конфига: `SUPER+R` и перезапуск сессии заново применяют `tagrule` из `tag.conf`.
+
 ## Установка
 
 ```bash
