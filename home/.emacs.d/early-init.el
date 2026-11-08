@@ -3,6 +3,12 @@
 ;; Загружается перед init.el, до появления окна GUI.
 
 
+;; 0. Пакеты храним в ~/.emacs.d/cache/elpa.
+;; Это нужно установить ДО `package-initialize' в init.el, иначе Emacs
+;; будет искать пакеты в ~/.emacs.d/elpa и не увидит уже установленные.
+(setq package-user-dir (expand-file-name "cache/elpa/" user-emacs-directory))
+(make-directory package-user-dir t)
+
 ;; 1. Указываем путь к папке с кастомными темами
 ;; (чтобы Emacs смог найти my-kitty-theme)
 (add-to-list 'custom-theme-load-path

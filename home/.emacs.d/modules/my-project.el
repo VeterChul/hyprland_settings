@@ -114,22 +114,32 @@
   (if (file-exists-p my/cheatsheet-file)
       (let ((buf (get-buffer-create "*Cheatsheet*")))
         (with-current-buffer buf
-          (erase-buffer)
-          (insert-file-contents my/cheatsheet-file)
+          ;; Буфер мог остаться от предыдущего открытия и быть read-only.
+          (let ((inhibit-read-only t))
+            (erase-buffer)
+            (insert-file-contents my/cheatsheet-file))
+          (org-mode)
           (setq buffer-read-only t)
-          (when (derived-mode-p 'org-mode)
-            (org-mode)))   ; включить Org-mode, если файл .org
+          (set-buffer-modified-p nil)
+          (local-set-key (kbd "q") #'my/close-cheatsheet))
         (switch-to-buffer buf))
     (message "Файл cheatsheet.org не найден в %s" user-emacs-directory)))
 
 (defun my/close-cheatsheet ()
   "Закрыть окно с подсказками и убить буфер."
   (interactive)
-  (let ((win (get-buffer-window "*Cheatsheet*")))
-    (when win
-      (delete-window win))
-    (when (get-buffer "*Cheatsheet*")
-      (kill-buffer "*Cheatsheet*"))))
+  (let ((buf (get-buffer "*Cheatsheet*")))
+    (when buf
+      (let ((win (get-buffer-window buf)))
+        (when win
+          ;; Нельзя удалить единственное окно на фрейме: сначала
+          ;; переключаем его на другой буфер.
+          (if (one-window-p t)
+              (switch-to-buffer (or (other-buffer buf t)
+                                    (get-buffer-create "*scratch*")))
+            (delete-window win))))
+      (when (buffer-live-p buf)
+        (kill-buffer buf)))))
 
 ;; ------------------------------------------------------------
 ;; Стартовый выбор проекта
@@ -137,16 +147,23 @@
 
 (defun my/startup-select-project ()
   "Открыть список известных проектов и переключиться на выбранный.
-Перед выбором открывается буфер с подсказками, после выбора — закрывается."
+Если известных проектов нет, ничего не открывать."
   (interactive)
-  (my/open-cheatsheet)   ; открываем подсказки
-  (if (projectile-known-projects)
-      (progn
-        (projectile-switch-project-by-name
-         (completing-read "Select project: " (projectile-known-projects)))
-        (my/close-cheatsheet))   ; закрываем подсказки после выбора
-    (message "No known projects yet. Open some project first.")
-    (my/close-cheatsheet)))      ; если проектов нет, тоже закрываем
+  (let ((projects (projectile-known-projects)))
+    (if projects
+        (progn
+          (my/open-cheatsheet)
+          ;; Закрываем подсказки даже при отмене выбора (C-g).
+          (unwind-protect
+              (condition-case err
+                  (projectile-switch-project-by-name
+                   (completing-read "Select project: " projects))
+                (quit nil)
+                (error
+                 (message "Не удалось открыть проект: %s"
+                          (error-message-string err))))
+            (my/close-cheatsheet)))
+      (message "No known projects yet. Open some project first."))))
 
 
 ;; ------------------------------------------------------------
@@ -160,14 +177,5 @@
 
 ;; Запуск выбора проекта после загрузки
 (add-hook 'emacs-startup-hook #'my/startup-select-project)
-
-;; ============================================================
-;; Буфер с подсказками (cheatsheet)
-;; ============================================================
-
-(defvar my/cheatsheet-file (expand-file-name "cheatsheet.org" user-emacs-directory)
-  "Путь к файлу с подсказками.")
-
-
 
 (provide 'my-project)

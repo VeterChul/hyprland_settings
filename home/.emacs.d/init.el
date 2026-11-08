@@ -4,9 +4,11 @@
 
 ;; Настройка package и use-package
 (require 'package)
+;; Официальный melpa.org с этой машины недоступен (соединение зависает),
+;; поэтому используем рабочее зеркало MELPA.
 (setq package-archives '(("gnu"   . "https://elpa.gnu.org/packages/")
                          ("nongnu" . "https://elpa.nongnu.org/nongnu/")
-                         ("melpa" . "https://melpa.org/packages/")))
+                         ("melpa" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
 (package-initialize)
 
 (unless (package-installed-p 'use-package)

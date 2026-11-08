@@ -54,8 +54,9 @@
 (setq bookmark-default-file (expand-file-name "bookmarks" my/cache-dir))
 (setq save-place-file (expand-file-name "saveplace" my/cache-dir))
 
-;; 6. Пакеты (это критично – должно быть до `package-initialize`)
-(setq package-user-dir my/elpa-dir)
+;; 6. Пакеты
+;; package-user-dir задаётся в early-init.el — до вызова `package-initialize'.
+;; Здесь менять его уже поздно.
 
 ;; 7. Native compilation (eln-кэш)
 (setq native-comp-eln-load-path (list my/eln-cache-dir))
